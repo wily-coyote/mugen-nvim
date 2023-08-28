@@ -1,0 +1,3 @@
+This is a collection of `.vim` config files for M.U.G.E.N's
+CNS language and I.K.E.M.E.N's ZSS language. It provides basic syntax
+highlighting and automatic filetype detection.

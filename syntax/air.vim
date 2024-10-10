@@ -15,11 +15,15 @@
 "    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
 syn case ignore
-syn keyword airClsn Clsn1 Clsn2 Clsn1Default Clsn2Default
+syn keyword airClsn1 Clsn1 Clsn1Default
+syn keyword airClsn2 Clsn2 Clsn2Default
 syn region airComment start=";" end="$"
 syn region airSection start="^\s\{-}\[" end="\]" contains=airNumber
 syn match airNumber /-\?[0-9]\{-}\.[0-9]\+\|-\?[0-9]\+/
+syn keyword airKeyword LoopStart Interpolate
 hi link airComment Comment
 hi link airSection Statement
 hi link airNumber Number
-hi link airClsn Function
+hi link airClsn2 Function
+hi link airClsn1 PreProc
+hi link airKeyword Function

@@ -18,10 +18,11 @@ syn case ignore
 syn match zssVariable /\$[a-zA-Z\.\_][a-zA-Z0-9\.\_]\{}/ 
 syn match zssIdentifierFunction /[a-zA-Z\.\_][a-zA-Z0-9\.\_]\{}/ 
 syn match zssIdentifierParameter /[a-zA-Z\.\_][a-zA-Z0-9\.\_]\{}/ contained
-syn match zssFunction /[a-zA-Z\.\_][a-zA-Z0-9\.\_]\{}\s\{-}{/ contains=zssIdentifierFunction
+syn match zssFunction /[a-zA-Z\.\_][a-zA-Z0-9\.\_]\{}\_s\{-}{/ contains=zssIdentifierFunction
 syn region zssSection start="\[" end="\]" contains=zssNumber,zssComment
-syn cluster zssExpression contains=zssNumber,zssString
-syn match zssParameter /[a-zA-Z\.][a-zA-Z0-9\.]\{}\s\{}:/ contains=zssIdentifierParameter
+syn cluster zssExpression contains=zssNumber,zssIdentifierFunction,zssVariable,zssString
+"syn match zssParameter /\([a-zA-Z\.][a-zA-Z0-9\.]\{}\s\{}:\)\_.\{-}[\;\}]/ transparent contains=zssIdentifierParameter,@zssExpression
+syn match zssParameter /\([a-zA-Z\.][a-zA-Z0-9\.]\{}\s\{}:\)/ transparent contains=zssIdentifierParameter
 syn match zssNumber /[0-9]\?\.[0-9]\+\|[0-9]\+/
 syn keyword zssStatement if else switch case default call let
 syn keyword zssModifier ignorehitpause persistent

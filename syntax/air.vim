@@ -22,7 +22,7 @@ syn region airSection start="^\s\{-}\[" end="\]" contains=airNumber
 syn match airNumber /-\?[0-9]\{-}\.[0-9]\+\|-\?[0-9]\+/
 syn keyword airKeyword LoopStart Interpolate
 hi link airComment Comment
-hi link airSection Statement
+hi link airSection Type
 hi link airNumber Number
 hi link airClsn2 Function
 hi link airClsn1 PreProc

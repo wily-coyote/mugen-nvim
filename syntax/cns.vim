@@ -27,11 +27,11 @@ syn region cnsComment start=";"	end="$"
 syn region cnsSection start="^\s\{-}\["	end="\]" contains=cnsNumber
 syn match cnsKey /^\s*[a-zA-Z][a-zA-Z0-9._\-]*/ contains=cnsTrigger, cnsTriggerType
 hi link cnsComment Comment
-hi link cnsSection Statement
+hi link cnsSection Type
 hi link cnsNumber Number
 hi link cnsString String
-hi link cnsKey String
-hi link cnsTrigger Type
-hi link cnsTriggerType Type
+hi link cnsKey Keyword
+hi link cnsTrigger Special
+hi link cnsTriggerType Special
 hi link cnsOperator Operator
 hi link cnsIdentifier Function

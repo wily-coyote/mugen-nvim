@@ -1,3 +1,12 @@
-This is a collection of `.vim` config files for M.U.G.E.N's
-CNS language and I.K.E.M.E.N's ZSS language. It provides basic syntax
-highlighting and automatic filetype detection.
+This is a collection of `.vim` config files for M.U.G.E.N's CNS language and
+I.K.E.M.E.N's ZSS language. It provides basic syntax highlighting, automatic
+filetype detection, playtesting from the editor and snippets via nvim-cmp.
+
+To set up in Neovim, install with Lazy and add to your config:
+
+require("mugen").setup {
+	game_path = [[/home/Ikemen-GO/bin/Ikemen_GO]],
+	run_command = {"-p1", "%", "-p2", "%"}
+}
+
+'%' refers to the current file.

@@ -1,0 +1,1496 @@
+
+sctrl	AppendToClipboard
+doc	This is the same as DisplayToClipboard, except that message text is added on a new line, instead of overwriting whatever text is already on the clipboard. See DisplayToClipboard for a format description.
+
+sctrl	Turn
+doc	Instantly turns the player to face the opposite direction. Does not play a turning animation.
+
+sctrl	ModifyExplod
+doc	Modifies the parameters of an existing Explod. Syntax is basically\nthe same as Explod. However, this controller is subject to future\nchange. Any code relying on this controller is not guaranteed to\nwork in the future.
+
+sctrl	VarSet
+doc	Sets one of the player's working variables. Either a float variable or an int variable can be set by this controller, but not both at the same time.
+req	v
+req	value
+req	fv
+req	value
+
+sctrl	DestroySelf
+doc	If called by a helper-type character, DestroySelf causes that character to be removed from the field of play. DestroySelf is not valid for non-helper characters.
+
+sctrl	MakeDust
+doc	This controller is deprecated; use the Explod controller. Creates dust effects.
+opt	pos
+opt	pos2
+opt	spacing
+
+sctrl	HitAdd
+doc	Adds to the current combo counter.
+req	value
+
+sctrl	RemoveExplod
+doc	Removes all of a player's explods, or just the explods with a specified ID number.
+opt	ID
+
+sctrl	DisplayToClipboard
+doc	This controller is only useful for debugging. DisplayToClipboard clears the player clipboard and prints a specified message to it. Display of the player clipboards is enabled in debug mode (press Ctrl+D).
+
+sctrl	Offset
+doc	Changes the player's display offset. The player is drawn shifted from his axis by this amount.
+opt	x
+opt	y
+
+sctrl	Projectile
+doc	Creates a projectile for the player. The Projectile controller takes all the parameters of the HitDef controller, which control the HitDef for the projectile. In addition, Projectile has the following additional parameters:
+opt	ProjID
+opt	projanim
+opt	projhitanim
+opt	projremanim
+opt	projcancelanim
+opt	projscale
+opt	projremove
+opt	projremovetime
+opt	velocity
+opt	remvelocity
+opt	accel
+opt	velmul
+opt	projhits
+opt	projmisstime
+opt	projpriority
+opt	projsprpriority
+opt	projedgebound
+opt	projstagebound
+opt	projheightbound
+opt	offset
+opt	postype
+opt	projshadow
+opt	supermovetime
+opt	pausemovetime
+opt	afterimage.time
+
+sctrl	PlaySnd
+opt	volumescale
+opt	channel
+opt	lowpriority
+opt	freqmul
+opt	loop
+opt	pan
+opt	abspan
+doc	Plays back a sound. Prior to version 1.0 RC8, a volume parameter was used instead of volumescale. The volume parameter is no longer supported and is now ignored.
+req	value
+
+sctrl	LifeSet
+doc	Sets the player's life to the specified value.
+req	value
+
+sctrl	SuperPause
+doc	Freezes the gameplay and darkens the screen. While each player is frozen, no time passes for them. Use for a dramatic pause during the start of hyper attacks.
+opt	time
+opt	anim
+opt	sound
+opt	pos
+opt	darken
+opt	p2defmul
+opt	poweradd
+opt	unhittable
+
+sctrl	ExplodBindTime
+doc	Changes the position binding time of the player's explods.
+opt	ID
+opt	time
+
+sctrl	RemapPal
+doc	Changes one of the player's palettes to another.
+
+sctrl	AngleAdd
+doc	Adds to the drawing rotation angle used by AngleDraw.
+req	value
+
+sctrl	DefenceMulSet
+doc	Sets the player's defense multiplier. All damage the player takes is scaled by this amount.
+req	value
+
+sctrl	ForceFeedback
+doc	Creates force feedback for supported force feedback devices. This controller is not implemented in MUGEN 1.0. Parameters to the ForceFeedback controller may not be specified using arithmetic expressions. It is an exception in this regard.
+opt	waveform
+opt	time
+opt	freq
+opt	ampl
+opt	self
+
+sctrl	AngleDraw
+doc	Draws the player (for 1 frame) rotated about his axis by the angle set by the AngleSet controller. When facing right, a positive angle means a counterclockwise rotation.
+opt	value
+
+sctrl	VelAdd
+doc	Adds the specified amounts to the player's velocity. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+opt	x
+opt	y
+
+sctrl	Null
+doc	Does nothing. May be used for temporarily disabling other state controllers by simply changing their type to Null.
+
+sctrl	BGPalFX
+doc	Same as PalFX, except that this affects the palette of the background and lifebars instead of the palette of the character. See the PalFX section for details on the parameters to BGPalFX.
+
+sctrl	AngleMul
+doc	Multiplies the drawing rotation angle used by AngleDraw by the specified factor.
+req	value
+
+sctrl	Pause
+opt	endcmdbuftime
+opt	movetime
+opt	pausebg
+doc	Pauses the game for the specified amount of time. Player and background updates are not carried out during this time.
+req	time
+
+sctrl	LifeAdd
+opt	kill
+opt	absolute
+doc	Adds the specified amount to the player's life, scaled by the player's defense multiplier if necessary.
+req	value
+
+sctrl	AfterImageTime
+doc	Changes the duration of the player's afterimage effects, if currently enabled. If no afterimage effects are being displayed, this controller does nothing.\nKnown bugs: If the timegap parameter in the originating AfterImage controller is not set at 1, using this AfterImageTime will cause the frame positions to be reset.
+req	time
+
+sctrl	CtrlSet
+doc	Sets the player's control flag.
+req	value
+
+sctrl	TargetVelAdd
+doc	Adds the specified amounts to all targets' velocities. A positive x velocity is in the direction that the target is facing, while a positive y velocity is downward on the screen.
+opt	x
+opt	y
+opt	ID
+
+sctrl	PowerAdd
+doc	Adds the specified amount to the player's power.
+req	value
+
+sctrl	HitFallVel
+doc	If the player has been hit and is in a falling state, sets the player's velocities to the fall velocities (fall.xvel and fall.yvel) specified in the HitDef.
+
+sctrl	SprPriority
+doc	Changes the player's sprite priority. Higher-priority sprites are drawn on top of lower-priority sprites.
+req	value
+
+sctrl	VarAdd
+doc	Adds to one of the player's working variables. Either a float variable or an int variable can be added to by this controller.
+req	v
+req	value
+req	fv
+req	value
+
+sctrl	Trans
+opt	alpha
+doc	Overrides the player's animation transparency parameters for current game tick. Useful for special effects.
+req	trans
+
+sctrl	TargetBind
+doc	Binds the player's specified targets to a specified location relative to the player's axis.
+opt	time
+opt	ID
+opt	pos
+
+sctrl	HitOverride
+opt	slot
+opt	time
+opt	forceair
+doc	Defines a hit override. If the player is hit by an attack of the specified type, he will go to the specified state number instead of his default gethit behavior. Up to 8 hit overrides can be active at one time.
+req	attr
+req	stateno
+
+sctrl	PosAdd
+doc	Offsets the player's position by the specified amounts. The X coordinate is relative to the player's axis, with positive values moving in the direction that the player is facing. The Y coordinate\nis relative to the player's axis, with negative values moving up.
+opt	x
+opt	y
+
+sctrl	StopSnd
+doc	Stops any sound which is playing on the specified channel.
+req	channel
+
+sctrl	BindToTarget
+doc	Binds the player to a specified position relative to the specified target.
+opt	time
+opt	ID
+opt	pos
+
+sctrl	Gravity
+doc	Accelerates the player downwards, using the value of the player's "yaccel" constant.
+
+sctrl	HitBy
+doc	Temporarily specifies the types of hits that are be allowed hit to the player.
+opt	time
+
+sctrl	AttackMulSet
+doc	Sets the player's attack multiplier. All damage the player gives is scaled by this amount.
+req	value
+
+sctrl	GameMakeAnim
+doc	Creates a game animation, like a hit spark or a super charging effect. This controller has been superseded by Explod and is now considered deprecated. Support for it may be removed in future versions.
+opt	value
+opt	under
+opt	pos
+opt	random
+
+sctrl	ChangeAnim2
+doc	Like ChangeAnim, except this controller should be used if you have placed P2 in a custom state via a hit and wish to change P2's animation to one specified in P1's air file. For example, when making throws, use this to change P2 to a being-thrown animation.
+
+sctrl	HitFallDamage
+doc	When the player has been hit and is in a falling state, apply damage\nfrom the fall (specified in the hitdef) to the player.
+
+sctrl	TargetState
+opt	ID
+doc	Makes all targets change to the specified state number.
+req	value
+
+sctrl	TargetDrop
+doc	Drops all targets from the player's target list, except possibly for those having a specified target ID number. Useful for applying effects to only certain targets.
+opt	excludeID
+opt	keepone
+
+sctrl	VelMul
+doc	Multiplies the player's velocity by the specified amounts. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+opt	x
+opt	y
+
+sctrl	Helper
+doc	Creates another instance of the player as a helper character.
+opt	helpertype
+opt	name
+opt	ID
+opt	pos
+opt	postype
+opt	facing
+opt	stateno
+opt	keyctrl
+opt	ownpal
+opt	supermovetime
+opt	pausemovetime
+opt	size.xscale
+opt	size.yscale
+opt	size.ground.back
+opt	size.ground.front
+opt	size.air.back
+opt	size.air.front
+opt	size.height
+opt	size.proj.doscale
+opt	size.head.pos
+opt	size.mid.pos
+opt	size.shadowoffset
+
+sctrl	VelSet
+doc	Sets the player's velocity to the specified values. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+opt	x
+opt	y
+
+sctrl	EnvColor
+doc	Turns the whole screen a solid color, excepting foreground-layer animations like hit sparks and "ontop" explods. Foreground layers of the stage will not be visible.
+opt	value
+opt	time
+opt	under
+
+sctrl	ChangeAnim
+opt	elem
+doc	Changes the action number of the player's animation.
+req	value
+
+sctrl	StateTypeSet
+doc	Changes the current state type and move type. Useful for states that go from the ground into the air, etc.
+opt	statetype
+opt	movetype
+opt	physics
+
+sctrl	MoveHitReset
+doc	Resets the movehit flag to 0. That is, after executing MoveHitReset, the triggers MoveContact, MoveGuarded, and MoveHit will all return 0.
+
+sctrl	PosSet
+doc	Sets the player's position to the specified coordinates. The X coordinate is relative to the center of the screen, with positive values moving right. The Y coordinate is relative to the floor, with negative values moving up.
+opt	x
+opt	y
+
+sctrl	Width
+doc	Temporarily changes the size of the player's width bar for 1 tick. Useful for controlling the "pushing" behavior when the player makes contact with another or with the sides of the screen.
+opt	edge
+opt	player
+
+sctrl	VictoryQuote
+doc	Selects a victory quote from the player to display in the next victory screen.
+opt	value
+
+sctrl	AfterImage
+doc	Enables player afterimage effects. The character's frames are stored in a history buffer, and are displayed after a delay as afterimages.
+opt	time
+opt	length
+opt	palcolor
+opt	palinvertall
+opt	palbright
+opt	palcontrast
+opt	palpostbright
+opt	paladd
+opt	palmul
+opt	timegap
+opt	framegap
+opt	trans
+
+sctrl	HitFallSet
+doc	When the player has been hit, sets the player's fall variables.
+opt	value
+opt	xvel
+opt	yvel
+
+sctrl	VarRangeSet
+opt	first
+opt	last
+doc	Sets a contiguous range of the player's working variables to the same value. Either float variables or int variables can be set by this controller, but not both at the same time.
+req	value
+req	fvalue
+
+sctrl	VarRandom
+opt	range
+doc	Sets the specified int variable to a random value. Float variables cannot be set by this controller.
+req	v
+
+sctrl	PosFreeze
+doc	Temporarily freezes the player's position.
+opt	value
+
+sctrl	TargetVelSet
+doc	Sets all targets' velocities to the specified values. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+opt	x
+opt	y
+opt	ID
+
+sctrl	HitDef
+opt	hitflag
+opt	guardflag
+opt	affectteam
+opt	animtype
+opt	air.animtype
+opt	fall.animtype
+opt	priority
+opt	damage
+opt	pausetime
+opt	guard.pausetime
+opt	sparkno
+opt	guard.sparkno
+opt	sparkxy
+opt	hitsound
+opt	guardsound
+opt	ground.type
+opt	air.type
+opt	ground.slidetime
+opt	guard.slidetime
+opt	ground.hittime
+opt	guard.hittime
+opt	air.hittime
+opt	guard.ctrltime
+opt	guard.dist
+opt	yaccel
+opt	ground.velocity
+opt	guard.velocity
+opt	air.velocity
+opt	airguard.velocity
+opt	ground.cornerpush.veloff
+opt	air.cornerpush.veloff
+opt	down.cornerpush.veloff
+opt	guard.cornerpush.veloff
+opt	airguard.cornerpush.veloff
+opt	airguard.ctrltime
+opt	air.juggle
+opt	mindist
+opt	maxdist
+opt	snap
+opt	p1sprpriority
+opt	p2sprpriority
+opt	p1facing
+opt	p1getp2facing
+opt	p2facing
+opt	p1stateno
+opt	p2stateno
+opt	p2getp1state
+opt	forcestand
+opt	fall
+opt	fall.xvelocity
+opt	fall.yvelocity
+opt	fall.recover
+opt	fall.recovertime
+opt	fall.damage
+opt	air.fall
+opt	forcenofall
+opt	down.velocity
+opt	down.hittime
+opt	down.bounce
+opt	id
+opt	chainID
+opt	nochainID
+opt	hitonce
+opt	kill
+opt	guard.kill
+opt	fall.kill
+opt	numhits
+opt	getpower
+opt	givepower
+opt	palfx.time
+opt	palfx.mul
+opt	palfx.add
+opt	envshake.time
+opt	envshake.freq
+opt	envshake.ampl
+opt	envshake.phase
+opt	fall.envshake.time
+opt	fall.envshake.freq
+opt	fall.envshake.ampl
+opt	fall.envshake.phase
+doc	Defines a single hit of the player's attack. If the player's Clsn1 box (red) comes in contact with his opponent's Clsn2 box (blue), and the HitDef was define on or before that particular point in time, then the specified effect will be applied. This is one of the more complex, but most commonly-used controllers.\nA single HitDef is valid only for a single hit. To make a move hit several times, you must trigger more than one HitDef during the attack.
+req	attr
+
+sctrl	TargetPowerAdd
+opt	ID
+doc	Adds the specified amount to all targets' power.
+req	value
+
+sctrl	ChangeState
+opt	ctrl
+opt	anim
+doc	Changes the state number of the player.
+req	value
+
+sctrl	TargetLifeAdd
+opt	ID
+opt	kill
+opt	absolute
+doc	Adds the specified amount to all targets' life, scaled by the targets' defense multipliers if necessary.
+req	value
+
+sctrl	FallEnvShake
+doc	Shakes the screen using the fall.envshake parameters set by an attack (see HitDef controller). This controller is effective only if GetHitVar(fall.envshake.time) is not zero, and it sets GetHitVar(fall.envshake.time) to zero after being executed. This controller is used in common1.cns to shake the screen when a player falls, and is not normally useful otherwise.
+
+sctrl	SelfState
+doc	Like ChangeState, except that this changes a player back to a state in his own state data. Use this when you have placed an opponent player in a custom state via an attack, and wish to restore the opponent to his own states.
+
+sctrl	TargetFacing
+opt	ID
+doc	Turns all targets to face a specified direction relative to the player.
+req	value
+
+sctrl	SndPan
+doc	Changes the panning of a currently playing sound. This controller may be continually triggered to smoothly move a sound across the sound field or to have a sound follow the player.
+req	channel
+req	pan
+
+sctrl	ScreenBound
+doc	Specifies whether or not the player's movement should be constrained to the screen or not. Also determines whether the camera should move to follow the player or not. The results of this controller are valid for 1 tick.
+opt	value
+opt	movecamera
+
+sctrl	PlayerPush
+doc	Disables the player's push checking for one tick. Push checking keeps players from overlapping one another. By temporarily disabling push checking, dodge-type moves in which the player passes through another (but can still be hit) can be implemented.
+req	value
+
+sctrl	PowerSet
+doc	Sets the amount of power that the player has.
+req	value
+
+sctrl	ReversalDef
+doc	Defines a reversal. If one of P2's Clns1 boxes comes in contact with one of P1's Clsn1 boxes and a ReversalDef is active, then P1 will reverse P2's attack. Use with p1stateno (and optionally p2stateno) for creating reversal attacks. ReversalDefs take the HitDef parameters pausetime, sparkno, hitsound, p1stateno, and p2stateno, plus:
+
+sctrl	ParentVarSet
+doc	If the player is a helper, sets one of the parent's working variables. Either a float variable or an int variable can be set by this controller. Does nothing if the player is not a helper.
+req	v
+req	value
+req	fv
+req	value
+
+sctrl	EnvShake
+opt	freq
+opt	ampl
+opt	phase
+doc	Causes the screen to shake vertically.
+req	time
+
+sctrl	AllPalFX
+doc	Same as PalFX, except that this affects the palette of the background and lifebars as well as the palette of all characters and explods (regardless of the ownpal parameter). See the PalFX section for details on the parameters to AllPalFX.
+
+sctrl	HitVelSet
+doc	This controller is deprecated. When the player has been hit, sets the desired components of the player's velocity to the appropriate gethit velocities.
+opt	x
+opt	y
+
+sctrl	AssertSpecial
+doc	This controller allows you to assert up to three special flags simultaneously. MUGEN will automatically "deassert" each flag at every game tick, so you must assert a flag for each tick that you want it to be active.
+
+sctrl	ParentVarAdd
+doc	If the player is a helper, adds to one of the player's parent's working variables. Either a float variable or an int variable can be added to by this controller. If the player is not a helper, this controller does nothing.
+req	v
+req	value
+req	fv
+req	value
+
+sctrl	BindToRoot
+doc	If the player is a helper, binds the player to a specified position relative to its root. If the player is not a helper, this controller does nothing.
+opt	time
+opt	facing
+opt	pos
+
+sctrl	AngleSet
+doc	Sets the drawing rotation angle used by AngleDraw. The angle is initialized at 0.
+req	value
+
+sctrl	PalFX
+doc	Applies temporary effects the player's palette. These will also affect the palette of any explods and helpers the player owns, unless they have specified ownpal = 1.
+opt	time
+opt	add
+opt	mul
+opt	sinadd
+opt	invertall
+opt	color
+
+sctrl	NotHitBy
+doc	Temporarily specifies types of hits that are not allowed to hit the player.
+opt	time
+
+sctrl	Explod
+opt	ID
+opt	pos
+opt	postype
+opt	facing
+opt	vfacing
+opt	bindtime
+opt	vel
+opt	accel
+opt	random
+opt	removetime
+opt	supermove
+opt	supermovetime
+opt	pausemovetime
+opt	scale
+opt	sprpriority
+opt	ontop
+opt	shadow
+opt	ownpal
+opt	removeongethit
+opt	ignorehitpause
+opt	trans
+doc	The Explod controller is a flexible tool for displaying animations such as sparks, dust and other visual effects. Its functionality includes that of GameMakeAnim, which is now deprecated.
+req	anim
+
+sctrl	ClearClipboard
+doc	Erases any text currently on the player's clipboard.
+
+sctrl	BindToParent
+doc	If the player is a helper, binds the player to a specified position relative to its parent. If the player is not a helper, this controller does nothing.
+opt	time
+opt	facing
+opt	pos
+
+sctrl	AttackDist
+doc	Changes the value of the guard.dist parameter for the player's current HitDef. The guard.dist is the x-distance from P1 in which P2 will go\ninto a guard state if P2 is holding the direction away from P1.\nThe effect of guard.dist only takes effect when P1 has movetype = A.
+req	value
+
+trigger	P2BodyDist
+fmt	P2BodyDist
+doc	Returns the distance of P2 from P1, where P1 is the player, and P2 is his opponent. P2BodyDist is useful in the CMD for cases where P1 has an attack that is different when performed close to P2.
+
+trigger	HitCount
+fmt	HitCount
+doc	Returns the number times the player's current attack move has hit one or more opponents. This value is valid only for a single state; after any state change, it resets to 0. To prevent it from resetting to 0, set hitcountpersist in the StateDef (see cns documentation for details). The HitCount and UniqHitCount triggers differ only when the player is hitting more than one opponent. In the case where the player is hitting two opponents with the same attack, HitCount will increase by 1 for every hit, while UniqHitCount increases by 2.
+
+trigger	AnimExist
+fmt	AnimExist(0)
+doc	Returns 1 if the specified animation action exists for the player.\nThe result of this trigger is undefined if the player has been placed in a custom state by a successful hit. In this situation, use SelfAnimExist.
+
+trigger	Random
+fmt	Random
+doc	Returns a random number between 0 and 999, inclusive.
+
+trigger	MoveHit
+fmt	MoveHit
+doc	This trigger is valid only when the player is in an attack state.\nMoveHit gives a non-zero value if P2 has been hit by P1's attack. It gives 0 otherwise.\nTypically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+
+trigger	HitOver
+fmt	HitOver
+doc	If the player is in a gethit state, returns 1 when the hittime has expired, and 0 otherwise. For an explanation of hittime, see the HitDef documentation.
+
+trigger	Ctrl
+fmt	Ctrl
+doc	Returns the control flag of p1.
+
+trigger	HitVel
+fmt	HitVel
+doc	Gets the value of the velocity imparted to the player by a hit.\nYou must specify the component that you want to check, eg.\n"HitVel Y" to check the vertical velocity component.
+
+trigger	AILevel
+fmt	AILevel
+doc	Returns the difficulty level of the player's AI.
+
+trigger	Alive
+fmt	alive
+doc	Returns 1 if the player is still able to fight, 0 if the player has been KOed.
+
+trigger	GameHeight
+fmt	GameHeight
+doc	Returns the height of the game space in the player's local coordinate space.\nThe game space is defined as a spatial mapping to the visible area of the screen\nin which players interact.  Intuitively, it can be thought of as encompassing the\ngraphical area of the game.\nThe dimensions of the game space is specified by the GameWidth and GameHeight\nparameters in mugen.cfg.
+
+trigger	CanRecover
+fmt	CanRecover
+doc	If the player is currently in a falling state, returns 1 if he is currently able to recover, and 0 if he is not currently able to recover. If the player is not currently falling, the output of this trigger is undefined.
+
+trigger	BackEdgeDist
+fmt	BackEdgeDist
+doc	BackEdgeDist gives the distance between the x-axis of the player and the edge of the screen behind of the player.
+
+trigger	ProjHit(*,***)
+fmt	ProjHit0 = 0
+doc	This trigger takes an optional positive ID number as a suffix. If the ID number is omitted, ProjHit returns true if any of the player's projectiles successfully hit the opponent. When the ID number is specified, ProjHit returns true only if one of the player's projectiles with the specified ID number successfully hit the opponent.
+
+trigger	NumPartner
+fmt	NumPartner
+doc	NumPartner returns the number of partners that exist. Neutral players and normal helpers are not considered partners.
+
+trigger	ProjHitTime
+fmt	ProjHitTime(0)
+doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact successfully hit the opponent and had the specified ID number, then ProjHit returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked.\nIf no projectile meets all the above conditions, then ProjHitTime returns -1.
+
+trigger	Const480p
+fmt	Const480p(0)
+doc	Converts a value from the 480p coordinate space to the player's coordinate space.\nThe conversion ratio between coordinate spaces is the ratio of their widths.
+
+trigger	Command(*,***)
+fmt	Command = ""
+doc	Triggers if the user has input the specified command.
+
+trigger	GameWidth
+fmt	GameHeight
+doc	Returns the width of the game space in the player's local coordinate space.\nThe game space is defined as a spatial mapping to the visible area of the screen\nin which players interact.  Intuitively, it can be thought of as encompassing the\ngraphical area of the game.\nThe dimensions of the game space is specified by the GameWidth and GameHeight\nparameters in mugen.cfg.
+
+trigger	Atan (math)
+fmt	atan(0)
+doc	Computes the arctangent (in radians) of the specified argument.
+
+trigger	Const240p
+fmt	Const240p(0)
+doc	Converts a value from the 240p coordinate space to the player's coordinate space.\nThe conversion ratio between coordinate spaces is the ratio of their widths.
+
+trigger	AnimElemNo
+fmt	AnimElemNo(0)
+doc	Returns the number of the animation element in the current action\nthat would be displayed at the specified time. The argument to AnimElemNo represents the time to check, expressed in game ticks, relative to the present.
+
+trigger	MoveGuarded
+fmt	MoveGuarded
+doc	This trigger is valid only when the player is in an attack state.\nMoveGuarded gives a non-zero value if P2 is guarding, or has guarded, P1's attack. It gives 0 otherwise. P1 is the player, and P2 is his opponent.\nTypically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+
+trigger	AnimTime
+fmt	AnimTime
+doc	Gives the difference between the looptime of the current animation action and the player's animation-time. Useful for knowing when the end of the animation has been reached. (Animation-time is the time in game-ticks that the player has spent within the current animation action.)\nThe name may be confusing. Try to think of it as "time from the end of the animation". During the animation, AnimTime will always return a non-positive number.
+
+trigger	Anim
+fmt	Anim
+doc	Returns the current animation action number of the player.
+
+trigger	Vel
+fmt	Vel
+doc	Gets the value of the player's velocity. You must specify the component that you want to check, eg. "Vel Y" to check the Y-velocity.
+
+trigger	Cond (math)
+fmt	Cond("","","")
+doc	This trigger takes three arguments. The first argument is a condition argument.\nIf the condition is true (i.e., nonzero), Cond evaluates and returns the second\nargument. If the condition is false, Cond evaluates and returns the third\nargument. If the condition is bottom, then Cond returns bottom without\nevaluating the second or third arguments. In all cases, any unused argument(s) are not evaluated. Therefore, Cond can be\nused instead of IfElse to avoid any side effects that would be caused by\nevaluating the unused argument (e.g., variable assignment, or performing a\ncomputation that would cause bottom to be generated).
+
+trigger	IfElse (math)
+fmt	IfElse("","","")
+doc	This trigger takes three arguments. If the first is nonzero, IfElse returns the\nvalue of the second argument. Else, it returns the value of the third argument.\nAll arguments are evaluated prior to execution of IfElse. In particular, any\nside effects caused by evaluation of the arguments (such as variable\nassignment, or performing a computation that generates a warning) will occur.\nIf you wish to avoid these side effects, then use Cond.
+
+trigger	HitPauseTime
+fmt	HitPauseTime
+doc	Returns the time until the player's hitpause expires. The player enters a hitpause when his attack comes in contact with an opponent. The initial hitpause time is equal to the first value of the pausetime parameter in the player's HitDef. If ignorehitpause is not set, this will always return 0.
+
+trigger	PalNo
+fmt	PalNo
+doc	Returns the palette number of the player (i.e., the color scheme chosen for the character during character select.)
+
+trigger	InGuardDist
+fmt	InGuardDist
+doc	Returns 1 if the player is within guarding distance of an opponent's physical or projectile attack. The guarding distance is the value of the guard.dist parameter of the opponent's HitDef. Returns 0 if out of guard distance, or the opponent is not attacking.
+
+trigger	Var
+fmt	Var(0)
+doc	This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified int variable.
+
+trigger	TicksPerSecond
+fmt	TicksPerSecond
+doc	Returns the number of ticks per second. Useful for time calculations.
+
+trigger	AnimElem(*,***)
+fmt	AnimElem = 0
+doc	Gets the animation-time elapsed since the start of a specified element of the current animation action. Useful for synchronizing events to elements of an animation action.\n(reminder: first element of an action is element 1, not 0) AnimElemTime has similar functionality to AnimElem, but can take expressions as its argument.
+
+trigger	TimeMod(*,**,***)
+fmt	TimeMod = 0, 0
+doc	Returns the remainder when the state-time of the player is divided by the specified value. The % operator subsumes the functionality of TimeMod, so it is recommended that you use % instead.
+
+trigger	TeamMode(*,***)
+fmt	TeamMode = ""
+doc	TeamMode gives the current mode of play for the player's team.
+
+trigger	Acos (math)
+fmt	acos(0)
+doc	Computes the arccosine (in radians) of the specified argument.
+
+trigger	NumProj
+fmt	NumProj
+doc	Returns the total number of projectiles currently owned by the player.
+
+trigger	Name(*,***)
+fmt	Name = ""
+doc	Returns the player's name (the internal name specified in the .DEF file, which may not be the same as the displayed name).
+
+trigger	Floor (math)
+fmt	floor(0)
+doc	Implements the floor function. Returns the greatest integer less than or equal to its argument.
+
+trigger	Lose
+fmt	Lose
+doc	Returns 1 if the player (or the player's team, in team mode) has lost the round, 0 otherwise. Can be suffixed with "KO" or "Time" to return 1 only when the round has been lost by a KO or by time expiring, respectively.
+
+trigger	Time
+fmt	Time
+doc	Returns the state-time of the player (that is, the number of ticks that the player has been in the current state so far).
+
+trigger	UniqHitCount
+fmt	UniqHitCount
+doc	Returns the total number of hits the player's current attack move has done. This value is valid only for a single state; after any state change, it resets to 0. To prevent it from resetting to 0, set hitcountpersist in the StateDef (see cns documentation for details). The HitCount and UniqHitCount triggers differ only when the player is hitting more than one opponent. In the case where the player is hitting two opponents with the same attack, HitCount will increase by 1 for every hit, while UniqHitCount increases by 2.
+
+trigger	FrontEdgeBodyDist
+fmt	FrontEdgeBodyDist
+doc	FrontEdgeBodyDist gives the distance between the front of the player (as determined by the front edge of his width bar) and the edge of the screen.
+
+trigger	Asin (math)
+fmt	asin(0)
+doc	Computes the arcsine (in radians) of the specified argument.
+
+trigger	StageVar(*,***)
+fmt	StageVar("") = ""
+doc	Returns information about the stage.\nA limited number of parameters are supported.
+
+trigger	NumProjID
+fmt	NumProjID(0)
+doc	This trigger takes an ID number as a required argument. It returns the number of projectiles currently owned by the player and having the specified ID number.
+
+trigger	TeamSide
+fmt	TeamSide
+doc	Returns the team side the player is on. 1 represents P1 side (left), 2 for P2 side (right).
+
+trigger	Const(*)
+fmt	Const("")
+doc	Returns the value of one of the player's constants. Error conditions:\nnone
+
+trigger	AnimElemTime
+fmt	AnimElemTime(0)
+doc	Gets the animation-time elapsed since the start of a specified element of the current animation action. Useful for synchronizing events to elements of an animation action.\n(reminder: first element of an action is element 1, not 0)
+
+trigger	NumEnemy
+fmt	NumEnemy
+doc	NumEnemy returns the number of opponents that exist. Neutral players and normal helpers are not considered opponents.
+
+trigger	SysVar
+fmt	Var(0)
+doc	This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified system int variable.\nThis trigger is NOT to be used under normal circumstances. System\nvariables are reserved for bookkeeping in common1.cns.
+
+trigger	HitDefAttr(*,***)
+fmt	HitDefAttr = 0, 0
+doc	Checks the attribute parameter of the player's currently-active HitDef.\nIf the player is not currently attacking, then no parameters will match.\nCan be used for simple move-interrupts from weaker to stronger attacks in the CMD file. HitDefAttr != value1, value2 is logically equivalent to\n!(HitDefAttr = value1, value2).
+
+trigger	StateType
+fmt	StateType = ""
+doc	StateType gives the player's state-type. Refer to the section\non StateDef in the CNS documentation for more details on StateType.\nUseful for "move interrupts" in the CMD file.
+
+trigger	PlayerIDExist
+fmt	PlayerIDExist(0)
+doc	Returns 1 if a player with the specified ID number exists, 0 otherwise. This ID number is obtained using the "ID" trigger (see ID). Do not confuse PlayerID with TargetID.
+
+trigger	HitShakeOver
+fmt	HitShakeOver
+doc	If the player is in a gethit state, returns 1 if the hit shake (the period when he is shaking in place) has ended, and 0 otherwise.
+
+trigger	Sin (math)
+fmt	sin(0)
+doc	Computes the sine of the specified argument (in radians.)
+
+trigger	PowerMax
+fmt	PowerMax
+doc	Returns the maximum amount of power the player can have. This is normally 3000 (level 3).
+
+trigger	Ceil (math)
+fmt	ceil(0)
+doc	Implements the "ceiling" function. Returns the least integer which is greater than or equal to the specified argument.
+
+trigger	Cos (math)
+fmt	cos(0)
+doc	Computes the cosine of the specified argument (in radians.)
+
+trigger	RoundState
+fmt	RoundState
+doc	Returns the current round state number.
+
+trigger	GetHitVar(*)
+fmt	GetHitVar("")
+doc	When the player is in a gethit state, returns the value of the specified hit parameter.
+
+trigger	BackEdgeBodyDist
+fmt	BackEdgeBodyDist
+doc	BackEdgeBodyDist gives the distance from the back of the player, as determined by the end of his width bar, to the back edge of the screen.
+
+trigger	MoveType(*,***)
+fmt	MoveType = ""
+doc	MoveType gives the player's move-type. Refer to the section\non StateDef in the CNS documentation for more details on MoveType.\nUseful for "move interrupts" in the CMD file.
+
+trigger	Pi (math)
+fmt	pi
+doc	This trigger returns the numeric value of pi (3.141593...)
+
+trigger	IsHelper
+fmt	IsHelper
+doc	This trigger takes an optional ID number as an argument. If the ID number is omitted, IsHelper returns 1 if the player is a helper character, and 0 otherwise. If the ID number is included, then IsHelper returns 1 if the player is a helper character with the specified ID number, and 0 otherwise.
+
+trigger	RoundNo
+fmt	RoundNo
+doc	Returns the current round number.
+
+trigger	RootDist
+fmt	RootDist
+doc	This trigger is only valid for helper-type characters.\nRootDist returns the distance from the helper to its root. The root is the main player character who owns the helper: for instance, if you select Kumquat to play with, and Kumquat spawns a helper named Kiwi, who in turn spawns a helper named Penguin, then Penguin's root is Kumquat, and Penguin is a descendant of Kumquat. RootDist works similarly to P2Dist.
+
+trigger	MatchNo
+fmt	MatchNo
+doc	Returns the current match number.
+
+trigger	Pos
+fmt	Pos
+doc	Gets the value of the player's position. You must specify the component that you want to check, eg. "Pos Y" to check the Y-position.
+
+trigger	Power
+fmt	Power
+doc	Returns the amount of power the player has.
+
+trigger	ProjContactTime
+fmt	ProjContactTime(0)
+doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact, made contact with the opponent and had the specified ID number, then ProjContactTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjContactTime returns -1.
+
+trigger	MoveContact
+fmt	MoveContact
+doc	This trigger is valid only when the player is in an attack state.\nMoveContact gives a non-zero value if P2 has either been hit, or has guarded P1's attack. It gives 0 otherwise. P1 is the player, and P2 is his opponent.\nTypically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+
+trigger	IsHomeTeam
+fmt	IsHomeTeam
+doc	Returns 1 if the player's team is considered the "home team". In arcade modes, the computer is always considered the home team. In versus modes, P1's side (left) is the home team.
+
+trigger	AuthorName(*,***)
+fmt	AuthorName = ""
+doc	Returns the player's author's name (specified in the .DEF file). This may also be useful for telling apart characters with the same name but different authors.
+
+trigger	ProjContact(*,***)
+fmt	ProjContact0 = 0
+doc	This trigger takes an optional ID number as a suffix. If the ID number is omitted, ProjContact returns true if any of the player's projectiles either successfully hit the opponent or were guarded by the opponent. When the ID number is specified, ProjContact returns true only if any of the player's projectiles with the specified ID number either successfully hit the opponent or was guarded.
+
+trigger	Ln (math)
+fmt	ln(0)
+doc	Returns the natural logarithm of its argument. This produces slightly more accurate results than the otherwise equivalent expression log(e,(argument)).
+
+trigger	Life
+fmt	Life
+doc	Returns the player's life.
+
+trigger	ProjCancelTime
+fmt	ProjCancelTime(0)
+doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact was cancelled by an opponent's projectile and had the specified ID number, then ProjCancelTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjCancelTime returns -1.
+
+trigger	ID
+fmt	ID
+doc	Returns the ID number of the player. The ID number is unique for every player throughout the course of a match. Any helper that is created during this time will also receive its own unique ID number. This trigger may be useful for getting opponents' ID numbers, to be later used with the "playerID" redirection keyword (see exp docs). Do not confuse playerID with targetID.
+
+trigger	GameTime
+fmt	GameTime
+doc	Returns the total number of ticks that have elapsed in the game so far.
+
+trigger	Abs (math)
+fmt	abs(0)
+doc	Computes the absolute value of its argument.
+
+trigger	PrevStateNo
+fmt	StateNo
+doc	Returns the number of the state that the player was last in. The results of this trigger are not guaranteed to be accurate.
+
+trigger	StateNo
+fmt	StateNo
+doc	Returns the player's current state number. Useful for "move interrupts" in the CMD file.
+
+trigger	NumExplod
+fmt	NumExplod
+doc	This trigger takes an ID number as an optional argument. If the ID number is omitted, NumExplod returns the number of explods owned by the player. If the ID number is included, then NumExplod returns the number of explods with that ID number that are owned by the player. The ID number must be greater than -1. An ID number of -1 or less will give the same behavior as if the ID number is omitted.
+
+trigger	ProjGuarded(*,***)
+fmt	ProjGuarded0 = 0
+doc	This trigger takes an optional ID number as a suffix. If the ID number is omitted, ProjGuarded returns true if any of the player's projectiles were guarded by the opponent. When the ID number is specified, ProjGuarded returns true only if one of the player's projectiles with the specified ID number was guarded by the opponent.
+
+trigger	ProjGuardedTime
+fmt	ProjCancelTime(0)
+doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact was guarded by the opponent and had the specified ID number, then ProjGuardedTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjGuardedTime returns -1.
+
+trigger	Facing
+fmt	Facing
+doc	Returns 1 if the player is facing to the right, and -1 if the player is facing to the left.
+
+trigger	DrawGame
+fmt	Draw
+doc	Returns 1 if the player (or the player's team, in team mode) has ended the round in a draw, 0 otherwise.
+
+trigger	E (math)
+fmt	e
+doc	Returns the value of e (2.718281828...)
+
+trigger	RoundsExisted
+fmt	RoundsExisted
+doc	Returns the number of rounds the player has existed for. On the first round, returns 0. This is useful for a Turns mode intro.
+
+trigger	FVar
+fmt	FVar(0)
+doc	This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified float variable.
+
+trigger	Exp (math)
+fmt	exp(0)
+doc	Computes the exponential of the argument (e raised to the power of\nthe argument.) This produces slightly more accurate results than the\nequivalent expression e**(argument).
+
+trigger	ParentDist
+fmt	ParentDist
+doc	This trigger is only valid for helper-type characters.\nParentDist returns the distance from the helper to its parent. It works similarly to P2Dist.
+
+trigger	Const720p
+fmt	Const720p(0)
+doc	Converts a value from the 720p coordinate space to the player's coordinate space.\nThe conversion ratio between coordinate spaces is the ratio of their widths.
+
+trigger	P2Dist
+fmt	P2Dist
+doc	Returns the distance of P2 from P1, where P1 is the player, and P2 is his opponent.
+
+trigger	Tan (math)
+fmt	tan(0)
+doc	Computes the tangent of the specified argument (in radians.)
+
+trigger	NumHelper
+fmt	NumHelper
+doc	This trigger takes an ID number as an optional argument. If the ID number is omitted, then NumHelper returns the total number of helpers currently owned by the player. If the ID number is included, then NumHelper returns the total number of helpers with that ID number owned by the player. The ID number must be greater than 0. If the ID\nnumber is 0 or less, then all helpers are counted.
+
+trigger	NumTarget
+fmt	NumTarget
+doc	This trigger takes an ID number as an optional argument. If the ID number is omitted, NumTarget returns the current number of targets for the player. If the ID number is included, then NumTarget returns the number of targets for the player which have that target ID number. The ID number must be greater than -1. An ID number of -1 or less will give the same behavior as if the ID number is omitted.
+
+trigger	MatchOver
+fmt	MatchOver
+doc	Returns 1 if the match has ended. (For example, in the case of a best-of-three match, this will return true when one of the players or teams has won two rounds.)
+
+trigger	MoveReversed
+fmt	MoveReversed
+doc	This trigger is valid only when the player is in an attack state.\nMoveReversed gives a non-zero value if P1's attack has been reversed by P2. It gives 0 otherwise.
+
+trigger	LifeMax
+fmt	LifeMax
+doc	Returns the maximum amount of life the player can have. This is normally the value of the "life" parameter in the [Data] group of the player variables, but may be different in situations such as team modes.
+
+trigger	Log (math)
+fmt	Log("","")
+doc	Takes two arguments a and b, and returns the base-a logarithm of b.
+
+trigger	HitFall
+fmt	HitFall
+doc	If the player is currently in a gethit state, returns the fall flag of the hit. The output of this trigger is undefined if the player is not in a gethit state. For an explanation of the fall flag, see the HitDef documentation.
+
+trigger	SysFVar
+fmt	FVar(0)
+doc	This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified system float variable.\nThis trigger should NOT be used under normal circumstances. System\nvariables are reserved for bookkeeping in common1.cns.
+
+trigger	FrontEdgeDist
+fmt	FrontEdgeDist
+doc	FrontEdgeDist gives the distance between the x-axis of the player and the edge of the screen in front of the player.
+
+trigger	ScreenPos
+fmt	Pos
+doc	Gets the value of the player's absolute (screen-relative) position. You must specify the component that you want to check, eg. "Pos Y" to check the Y-position.
+
+sctrl	Text	ikgo
+opt	removetime
+opt	layerno
+opt	text
+opt	params
+opt	font
+opt	bank
+opt	align
+opt	pos
+opt	scale
+opt	color
+doc	Text controller is used for displaying text on screen.
+
+sctrl	TagIn	ikgo
+opt	ctrl
+opt	leader
+opt	partnerctrl
+doc	Makes the P1 and/or the specified partner exit Standby state. If no parameters are given it affects the player that called it. (Also affects helpers)
+
+sctrl	PlayBgm	ikgo
+opt	bgm
+opt	loop
+opt	volume
+opt	loopstart
+opt	loopend
+doc	Plays back a music. Supported file formats: *mp3*, *ogg*, *wav*.
+
+sctrl	GuardPointsAdd	ikgo
+req	value
+doc	Adds the specified amount to the player's guard points.
+
+sctrl	MapSet	ikgo
+req	map
+req	value
+doc	Sets value to player's map. This state controller can be used to change a number that has already been set via character's DEF file or to set a new map.
+
+sctrl	SaveFile	ikgo
+req	savedata
+req	path
+doc	Put specified data together and save it as binary. It uses gob, which is a serialized format for Go language, as the storage format. All characters specified by the character or helper who executed the function are stored at that time.
+
+sctrl	GuardBreakSet	ikgo
+req	value
+doc	Sets the player's Guard Break flag.
+
+sctrl	RootVarAdd	ikgo
+req	v
+req	value
+req	fv
+req	value
+req	var(var_no)
+req	fvar(var_no)
+doc	If the player is a helper, adds value to root's working variables. Either a float variable or an int variable can be added by this controller. If the player is not a helper, this controller does nothing. Root refers to the main player.
+
+sctrl	TargetDizzyPointsAdd	ikgo
+doc	Adds the specified amount to all targets' dizzy points.
+opt	ID
+req	value
+
+sctrl	PrintToConsole	ikgo
+doc	This controller is only useful for debugging. PrintToConsole prints a specified message to debug mode console, as well as terminal / command line window, if it's opened.\nThe syntax is the same as DisplayToClipboard:
+opt	params
+req	text
+
+sctrl	LoadFile	ikgo
+req	savedata
+req	path
+doc	Loads the specified data and overrides the data of the execution character. Note that all the data before reading will disappear.
+
+sctrl	TagOut	ikgo
+opt	self
+opt	partner
+opt	stateno
+opt	partnerstateno
+doc	Makes the P1 and/or the specified partner enter Standby state. If no parameters are given it affects the player that called it. (Also affects helpers)
+
+sctrl	ParentMapSet	ikgo
+req	map
+req	value
+doc	If the player is a helper, sets value to parent's map. If the player is not a helper, this controller does nothing. Parent refers to the instance that spawned the helper.
+
+sctrl	GuardPointsSet	ikgo
+req	value
+doc	Sets the amount of guard points that the player has.
+
+sctrl	MapAdd	ikgo
+req	map
+req	value
+doc	Adds value to player's map.
+
+sctrl	Dialogue	ikgo
+doc	Assigns a dialogue data to be displayed either right before lifebar calls fight during first round (last frame of  RoundState = 1) or at the last active frame of the final round (RoundState = 4, right before screen starts fading out). If more than 1 player calls this sctrl, who will end up initiating dialogue is chosen randomly.\nHow the rendered dialogue will look like (positioning, default face sprites, background definition, default time between text etc.) is controlled by `[Dialogue Info]` screenpack parameters (refer to system.def distributed with engine for a working example). By default player who called the state controller will use screenpack parameters prefixed with *p1* and his *enemy(0)* will be assigned to use *p2* parameters (this is adjustable via text tokens).\nWith appropriate screenpack parameters it's possible to skip to the next *text* parameter during dialogue via button press, without ending it all together. If this screenpack group is missing, dialogue won't be initiated at all (`enabled` parameter defaults to 0).\nTokens prefixed with *pX* (where X is 1 or 2) refers to screenpack `[Dialogue Info]` parameters prefixed the same way. Some tokens accepts *redirection* argument that points to which player assets (sprite, sound, anim, state) should be used.
+opt	hidebars
+opt	force
+req	textX
+
+sctrl	TeamMapAdd	ikgo
+req	map
+req	value
+doc	Adds value to all team members maps.
+
+sctrl	HitScaleSet	ikgo
+doc	Configures the damage scales based on the parameters provided.\nHitscale effects stacks multiplicatively (being applied on each hit and the cumulative effect can be calculated by multiplying the effects together)\nIf there is a HitScale for a specific ID it takes priority over the default one.\nThe damage scale gets reset once the enemy char leaves hit state.
+opt	id
+opt	addType** `string` Specifies how **add** and **mul
+opt	add** then multiplies the damage by **mul
+opt	mul** the adds **add
+opt	min
+opt	max** `float` Maximum damage scale, takes into account both **mul
+opt	reset
+opt	force
+req	affects
+req	mul** `float` Damage multiplier. For example a **mul
+req	add
+
+sctrl	RoundTimeAdd	ikgo
+req	value
+doc	Add specified amount of ticks into round time.
+
+sctrl	RedLifeSet	ikgo
+req	value
+doc	Sets the amount of red life that the player has.
+
+sctrl	ModifyBGCtrl	ikgo
+doc	Modifies the parameters of an existing stage [background controller](http://www.elecbyte.com/mugendocs/bgs.html#background-controllers).
+opt	time
+opt	value
+opt	x
+opt	y
+req	id
+
+sctrl	DizzyPointsSet	ikgo
+req	value
+doc	Sets the amount of dizzy points that the player has.
+
+sctrl	RootMapAdd	ikgo
+req	map
+req	value
+doc	If the player is a helper, adds value to root's map. If the player is not a helper, this controller does nothing. Root refers to the main player.
+
+sctrl	DizzySet	ikgo
+req	value
+doc	Sets the player's Dizzy flag. For the duration that this flag is set, combo hit counter does not reset and the combo count lifebar text will stay on screen.
+
+sctrl	LifebarAction	ikgo
+opt	top
+opt	time
+opt	timemul
+opt	anim
+opt	spr
+opt	snd
+opt	text
+doc	Displays text/sprites/anims synchronized with each other, using [lifebar data](Lifebar-features/#new_action). The intended use case is implementation of messages, often found in commercial fighting games.\nRefer to *data/action.zss* file and default lifebar distributed with engine for a working example.
+
+sctrl	TeamMapSet	ikgo
+req	map
+req	value
+doc	Sets value to all team members maps.
+
+sctrl	TargetScoreAdd	ikgo
+doc	Adds the specified amount of points to targets' current score counter.
+opt	ID
+req	value
+
+sctrl	TargetRedLifeAdd	ikgo
+doc	Adds the specified amount to all targets' red life, scaled by the targets' defense multipliers if necessary.
+opt	ID
+opt	absolute
+req	value
+
+sctrl	ScoreAdd	ikgo
+req	value
+doc	Adds the specified amount of points to P1 current score counter.
+
+sctrl	TargetGuardPointsAdd	ikgo
+doc	Adds the specified amount to all targets' guard points.
+opt	ID
+req	value
+
+sctrl	RoundTimeSet	ikgo
+req	value
+doc	Set round time to specified amount of ticks.
+
+sctrl	DizzyPointsAdd	ikgo
+req	value
+doc	Adds the specified amount to the player's dizzy points.
+
+sctrl	MatchRestart	ikgo
+opt	pXdef
+opt	stagedef
+opt	reload
+doc	Reset the round or match and resume. By default (when no optional parameters are set) has the same effect as F4 debug key (round restart). Optionally allows characters and stage reloading, which also changes the state controller functionality to work like shift+F4 debug key (match restart).
+
+sctrl	RootMapSet	ikgo
+req	map
+req	value
+doc	If the player is a helper, sets value root's map. If the player is not a helper, this controller does nothing. Root refers to the main player.
+
+sctrl	RemapSprite	ikgo
+opt	reset
+opt	preset
+opt	source
+opt	dest
+doc	Remaps one sprite with another (or does this for multiple sprites at once, based on character's CNS [RemapPreset](Character-features/#cns_remappreset) data)
+
+sctrl	RedLifeAdd	ikgo
+doc	Adds the specified amount to the player's red life, scaled by the player's defense multiplier if necessary.
+opt	absolute
+req	value
+
+sctrl	RootVarSet	ikgo
+req	v
+req	value
+req	fv
+req	value
+req	var(var_no)
+req	fvar(var_no)
+doc	If the player is a helper, sets value root's working variables. Either a float variable or an int variable can be set by this controller. If the player is not a helper, this controller does nothing. Root refers to the main player.
+
+sctrl	AssertInput	ikgo
+doc	This controller allows you to assert up to three input flags simultaneously via single sctrl. Similarly to AssertSpecial, there is no limit how many times this controller is called. Each flag will be automatically "de-asserted" at every game tick, so you must assert a flag for each tick that you want it to be active. Ikemen interprets input flags the same was as if corresponding input keys were pressed.
+opt	flag2
+opt	flag3
+req	flag
+
+sctrl	ParentMapAdd	ikgo
+req	map
+req	value
+doc	If the player is a helper, adds value to parent's map. If the player is not a helper, this controller does nothing. Parent refers to the instance that spawned the helper.
+
+trigger	Map	ikgo
+fmt	Map("")
+doc	Use the name of the map you want to recognize in parentheses. For example, a character with the below map will return Map(age) as a value set in character DEF file or via various state controllers that can modify character's map. If nothing is set, 0 is returned.
+
+trigger	Dizzy	ikgo
+fmt	Dizzy
+doc	Returns 1 if character is under [dizzy effect](Miscellaneous-Info/#dizzy) (assigned by [DizzySet](State-controllers/#new_dizzyset) sctrl).
+
+trigger	GuardPoints	ikgo
+fmt	GuardPoints
+doc	Returns the amount of [guard points](Character-features/#guardpoints) the player has.
+
+trigger	P7Name	ikgo
+fmt	P7Name = ""
+doc	Same as P1Name-P4Name, except that these return the name of other team members, if present. If there is no such opponent, then it returns 0 no matter what name is specified. Similarly, P5Name != "name" will return 1 no matter what name is specified.
+
+trigger	ConsecutiveWins	ikgo
+fmt	ConsecutiveWins
+doc	Returns number of matches won consecutively by this team side. The counter increases for the winning team at the same time MatchOver trigger starts returning 1. Losing a round resets the counter to 0 and prevents increment for this match.
+
+trigger	AiLevelF	ikgo
+fmt	AILevelF
+doc	Returns the difficulty level of the player's AI as float value (unlike *AILevel* trigger, which is still floored for compatibility reasons). If AI is enabled on the player, the value ranges from 1 (easiest) to 8 (most difficult). If AI is not enabled on the player, the return value is 0. AI difficulty level with floating point is a result of AI Ramping system (refer to select.def distributed with engine for more information)
+
+trigger	TeamSize	ikgo
+fmt	TeamSize
+doc	Returns character's team size (for *turns* mode it returns information that was previously not obtainable, for other team modes the returned value is equivalent to using `NumPartner + 1`)
+
+trigger	MemberNo	ikgo
+fmt	MemberNo
+doc	Returns character's team member position. Team leader is 1, partners receive successive numbers.
+
+trigger	WinSpecial	ikgo
+fmt	WinSpecial
+doc	Returns true if the player (or the player's team, in team mode) has won the round with the finishing blow being a special attack.
+
+trigger	TimeRemaining	ikgo
+fmt	TimeRemaining
+doc	Returns the amount of clock ticks until time over (-1 if time is disabled). Value returned by this trigger corresponds to lifebar timer (only ticks during RoundState = 2)
+
+trigger	WinHyper	ikgo
+fmt	WinHyper
+doc	Returns true if the player (or the player's team, in team mode) has won the round with the finishing blow being a hyper attack.
+
+trigger	TimeTotal	ikgo
+fmt	TimeTotal
+doc	Returns the total number of clock ticks that have elapsed so far. Takes into account previous rounds and matches since the start of this game mode.
+
+trigger	HitOverridden	ikgo
+fmt	HitOverridden
+doc	Returns 1 during frame in which player has overridden default gethit behavior via HitOverride state controller. Otherwise returns 0.
+
+trigger	TimeElapsed	ikgo
+fmt	TimeElapsed
+doc	Returns the amount of clock ticks since the battle began (0 if time is disabled). Value returned by this trigger corresponds to lifebar timer (only ticks during RoundState = 2)
+
+trigger	RedLife	ikgo
+fmt	RedLife
+doc	Returns the amount of [red life](Miscellaneous-Info/#redlife) the player has.
+
+trigger	RatioLevel	ikgo
+fmt	RatioLevel
+doc	Returns the character's ratio level: from 1 to 4, if the level is set, otherwise it returns 0.
+
+trigger	Standby	ikgo
+fmt	Standby
+doc	Returns 1 if character is under standby effect (assigned by [TagOut](State-controllers/#new_tagout) sctrl).
+
+trigger	FramesPerCount	ikgo
+fmt	FramesPerCount
+doc	Returns the `framespercount` value set under lifebar fight.def [Time] group. Can be divided by [TimeRemaining](Triggers/#new_timeremaining), [TimeTotal](Triggers/#new_timetotal), or [TimeElapsed ](Triggers/#new_timeelapsed) to get the representative value of the lifebar timer.
+
+trigger	StageTime	ikgo
+fmt	StageTime
+doc	Returns the amount of ticks since the last stage background reset. Value returned by this trigger corresponds directly to amount of times stage backgrounds have been updated (taking into account pause, super pause, as well as `resetbg` stage parameter), which allows to reliably synchronize [attachedchar](Stage-features/#info_attachedchar) actions to what's currently displayed by stage.
+
+trigger	P8Name	ikgo
+fmt	P8Name = ""
+doc	Same as P1Name-P4Name, except that these return the name of other team members, if present. If there is no such opponent, then it returns 0 no matter what name is specified. Similarly, P5Name != "name" will return 1 no matter what name is specified.
+
+trigger	StageConst	ikgo
+fmt	StageConst("")
+doc	Returns the value of one of the stage's constants. Stage constant variables can be set under stage's DEF [[Constants]](Stage-features/#constants) section.
+
+trigger	MoveCountered	ikgo
+fmt	CounterCount
+doc	This trigger is valid only when the player is in an attack state. MoveCountered returns 1 on attack contact, at the exact frame that p1 interrupts p2 attack (true for 1 frame, even if both P1 and P2 countered each other's moves). After contact, MoveCountered's return value will increase by 1 for each game tick that P1 is not paused. It gives 0 otherwise. See Details section of vanilla MoveContact trigger for more information.
+
+trigger	Round (math)	ikgo
+fmt	Round(0,0)
+doc	Returns the rounded value of `val` to specified `precision` (number of digits after the decimal point). `precision` can also be negative or zero.
+
+trigger	IsAsserted	ikgo
+fmt	IsAsserted("")
+doc	Returns 1 if the character has specified AssertSpecial state controller flag asserted. Flags that affect all characters at once don't have to be asserted directly by character to be detectable.
+
+trigger	ReversalDefAttr(x,x)	ikgo
+fmt	ReversalDefAttr = 0, 0
+doc	Checks the attribute parameter of the player's currently-active ReversalDef. If the player does not currently have an active ReversalDef, then no parameters will match. Can be used for AI to detect a counter or to code something to happen if it exists.\nReversalDefAttr!= value1, value2 is logically equivalent to !(ReversalDefAttr= value1, value2).
+
+trigger	TeamLeader	ikgo
+fmt	TeamLeader
+doc	Returns [playerno](Triggers/#new_playerno) of the character that is considered a team leader. In modes where only one player is controlled in particular round (*single*, *turns* and *ratio*) it will be either 1 or 2, depending on team side. In *simul* and *tag* modes, team leader is the first party member (again 1 or 2) by default, but who is considered a leader can be also dynamically adjusted via optional [TagIn](State-controllers/#new_tagin) sctrl *leader* parameter.\nManually swapping leader changes lifebar elements assignment - leader always uses P1 (or P2, depending on team side) lifebar elements, remaining players positions are moved accordingly, in ascending players order.
+
+trigger	SprPriority	ikgo
+fmt	SprPriority
+doc	Returns the player's/helper's current SprPriority value.
+
+trigger	SelfStatenoExist	ikgo
+fmt	SelfStatenoExist(0)
+doc	Works like stateNoExist, except that this only checks P1's state numbers, even when P1 is custom stated by a hit. Returns 1 if there is a statedef with the specified number. Otherwise it returns 0. Use the statedef number you want to recognize in parentheses.
+
+trigger	InCustomState	ikgo
+fmt	InCustomState
+doc	Returns 1 if character is in custom state (character forced into his opponent's statedef).
+
+trigger	MajorVersion	ikgo
+fmt	MajorVersion
+doc	Returns 1 if mugenversion in the def file is 1.0 or higher.
+
+trigger	PlayerNo	ikgo
+fmt	PlayerNo
+doc	Returns character's player number. Player 1 side uses odd numbers (1, 3, 5, 7), player 2 side even numbers (2, 4, 6, 8). Stage [AttachedChar](Stage-features/#info_attachedchar) uses number outside maximum player range (9).
+
+trigger	Score	ikgo
+fmt	Score
+doc	Returns the score points gained in this round by all team members.
+
+trigger	GuardPointsMax	ikgo
+fmt	GuardPointsMax
+doc	Returns the maximum amount of [guard points](Character-features/#guardpoints) the player can have. This is normally the same value as LifeMax (adjustable in character's CNS `[Data]` section).
+
+trigger	IsHost	ikgo
+fmt	IsHost
+doc	Returns if the player is host in online match.
+
+trigger	ScoreTotal	ikgo
+fmt	ScoreTotal
+doc	Returns the total score points value. Takes into account all team members, previous rounds and previous matches since the start of this game mode.
+
+trigger	ReceivedHits	ikgo
+fmt	ReceivedHits
+doc	Returns the total number of hits done by the opposite team to this character, in the currently ongoing combo. Unlike GetHitVar(hitcount), it takes into account all hits, including those applied by HitAdd. This value is valid as long as the opposite team combo count stays above 0, otherwise it returns 0 too.
+
+trigger	StageBackEdge	ikgo
+fmt	StageBackEdge
+doc	Returns the distance to the stage edge behind the player.
+
+trigger	GroundAngle	ikgo
+fmt	GroundAngle
+doc	TODO: ? Related to undocumented [PlatformAngle](State-controllers/#changed_projectile_platformangle) projectile parameter.
+
+trigger	PrevAnim	ikgo
+fmt	PrevAnim
+doc	Returns the number of the anim that the player was last in.
+
+trigger	GetPlayerID	ikgo
+fmt	GetPlayerID(0)
+doc	Returns ID of the player with specified [playerno](Triggers/#new_playerno). Returns 0 if the player doesn't exist.
+
+trigger	PauseTime	ikgo
+fmt	PauseTime
+doc	Returns the time until the active Pause and/or SuperPause effect expires (whichever lasts longer). The non 0 value is returned only after movetime parameter of these sctrls expires (player can no longer move).\nNormally states are not running during Pause and SuperPause, so this trigger will only work when used in a special statedef -4, which ignores these state controllers.
+
+trigger	GameMode	ikgo
+fmt	GameMode = ""
+doc	Returns the current game mode.\nFollowing game modes are detectable by default:\nThe trigger can be also used to detect [story mode arcs](Miscellaneous-Info/#arcs) and modes added via [external modules](Miscellaneous-Info/#lua_modules).
+
+trigger	P6Name	ikgo
+fmt	P6Name = ""
+doc	Same as P1Name-P4Name, except that these return the name of other team members, if present. If there is no such opponent, then it returns 0 no matter what name is specified. Similarly, P5Name != "name" will return 1 no matter what name is specified.
+
+trigger	Float (math)	ikgo
+fmt	Float(exp)
+doc	Converts argument evaluating to int type into float type.
+
+trigger	AnimLength	ikgo
+fmt	AnimLength
+doc	Returns total length of the P1 current animation.
+
+trigger	AnimElemLength	ikgo
+fmt	AnimElemLength
+doc	Returns total length of the P1 current animation element.
+
+trigger	StageFrontEdge	ikgo
+fmt	StageFrontEdge
+doc	Returns the distance to the stage edge in front of the player.
+
+trigger	Physics	ikgo
+fmt	Physics = ""
+doc	Returns the player's physics-type. Refer to the section on StateDef in the CNS documentation for more details on physics.
+
+trigger	FirstAttack	ikgo
+fmt	FirstAttack
+doc	Returns 1 if this character has landed the first attack (before any of the opponents or team partners) in the current round. Otherwise returns 0.
+
+trigger	P5Name	ikgo
+fmt	P5Name = ""
+doc	Same as P1Name-P4Name, except that these return the name of other team members, if present. If there is no such opponent, then it returns 0 no matter what name is specified. Similarly, P5Name != "name" will return 1 no matter what name is specified.
+
+trigger	ReceivedDamage	ikgo
+fmt	ReceivedDamage
+doc	Returns the total damage dealt by the opposite team to this character, in the currently ongoing combo. This value is valid as long as the opposite team combo count stays above 0, otherwise it returns 0 too.
+
+trigger	Max (math)	ikgo
+fmt	Max(0,0)
+doc	Takes two arguments, and returns the highest-valued number.
+
+trigger	Min (math)	ikgo
+fmt	Min(0,0)
+doc	Takes two arguments, and returns the lowest-valued number.
+
+trigger	LocalScale	ikgo
+fmt	LocalScale
+doc	Character's scale ratio in relation to screen apsect ratio and state owner coordinate space.
+
+trigger	DizzyPoints	ikgo
+fmt	DizzyPoints
+doc	Returns the amount of [dizzy points](Character-features/#dizzypoints) the player has.
+
+trigger	DizzyPointsMax	ikgo
+fmt	DizzyPointsMax
+doc	Returns the maximum amount of [dizzy points](Character-features/#dizzypoints) the player can have. This is normally the same value as LifeMax (adjustable in character's CNS `[Data]` section).
+
+trigger	RoundType	ikgo
+fmt	RoundType
+doc	Returns 3 during final round (the match will be over regardless of which team win), 2 if the match will be over if the opposite team win, or 1 if the match will be over if it's won by this team. Otherwise it returns 0.
+
+trigger	InDialogue	ikgo
+fmt	InDialogue
+doc	Returns 1 during ongoing dialogue initiated by [Dialogue](State-controllers/#new_dialogue) state controller.
+
+trigger	ComboCount	ikgo
+fmt	ComboCount
+doc	Returns the total number of hits done by the player's side in the currently ongoing combo. This value is valid as long as the opposite team combo count stays above 0, otherwise it returns 0 too. Returned value always matches current combo counter tracked by lifebar.
+
+trigger	HelperName	ikgo
+fmt	HelperName = ""
+doc	Returns the helper's name (assigned via helper's name parameter, defaults to "\<parent\>'s helper" if unique name is not assigned).
+
+trigger	GuardBreak	ikgo
+fmt	GuardBreak
+doc	Returns 1 if character is under [guard break](Miscellaneous-Info/#guardbreak) (assigned by [GuardBreakSet](State-controllers/#new_guardbreakset) sctrl).
+
+trigger	RandomRange (Math)	ikgo
+fmt	RandomRange(0,0)
+doc	Generates pseudo-random numbers uniformly distributed between given range (both bounds inclusive). Its functionality depricates the `VarRandom` state controller. This is now named RandomRange as of I.K.E.M.E.N. Go .99 RC1, Rand will still work but is deprecated.

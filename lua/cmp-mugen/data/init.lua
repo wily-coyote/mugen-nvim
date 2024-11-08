@@ -13,10 +13,11 @@ function module.read()
 	}
 
 	local obj
+	local doc
 	for line in file:lines() do
 		line = vim.trim(line):gsub("\\n", "\n")
 		local fields = vim.split(line, "\t")
-		if #fields >= 2 then
+		if #fields >= 1 then
 			if fields[1] == "sctrl" or fields[1] == "trigger" then
 				obj = {
 					ikgo = fields[3] == "ikgo"
@@ -40,6 +41,13 @@ function module.read()
 							item
 						}
 					end
+				elseif fields[1] == "docbgn" then
+					doc = ""
+				elseif fields[1] == "docend" then
+					obj.doc = vim.trim(doc)
+					doc = nil
+				elseif doc then
+					doc = doc .. line .. "\n"
 				else
 					obj[fields[1]] = fields[2]
 				end

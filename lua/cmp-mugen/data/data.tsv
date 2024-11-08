@@ -1,593 +1,683 @@
 
-sctrl	AppendToClipboard
-doc	This is the same as DisplayToClipboard, except that message text is added on a new line, instead of overwriting whatever text is already on the clipboard. See DisplayToClipboard for a format description.
+sctrl	AfterImage
+opt	time	0
+opt	length	0
+opt	palcolor	0
+opt	palinvertall	0
+opt	palbright	0
+opt	palcontrast	0
+opt	palpostbright	0
+opt	paladd	0
+opt	palmul	0.0
+opt	timegap	0
+opt	framegap	0
+opt	trans	string
+doc	
 
-sctrl	Turn
-doc	Instantly turns the player to face the opposite direction. Does not play a turning animation.
-
-sctrl	ModifyExplod
-doc	Modifies the parameters of an existing Explod. Syntax is basically\nthe same as Explod. However, this controller is subject to future\nchange. Any code relying on this controller is not guaranteed to\nwork in the future.
-
-sctrl	VarSet
-doc	Sets one of the player's working variables. Either a float variable or an int variable can be set by this controller, but not both at the same time.
-req	v
-req	value
-req	fv
-req	value
-
-sctrl	DestroySelf
-doc	If called by a helper-type character, DestroySelf causes that character to be removed from the field of play. DestroySelf is not valid for non-helper characters.
-
-sctrl	MakeDust
-doc	This controller is deprecated; use the Explod controller. Creates dust effects.
-opt	pos
-opt	pos2
-opt	spacing
-
-sctrl	HitAdd
-doc	Adds to the current combo counter.
-req	value
-
-sctrl	RemoveExplod
-doc	Removes all of a player's explods, or just the explods with a specified ID number.
-opt	ID
-
-sctrl	DisplayToClipboard
-doc	This controller is only useful for debugging. DisplayToClipboard clears the player clipboard and prints a specified message to it. Display of the player clipboards is enabled in debug mode (press Ctrl+D).
-
-sctrl	Offset
-doc	Changes the player's display offset. The player is drawn shifted from his axis by this amount.
-opt	x
-opt	y
-
-sctrl	Projectile
-doc	Creates a projectile for the player. The Projectile controller takes all the parameters of the HitDef controller, which control the HitDef for the projectile. In addition, Projectile has the following additional parameters:
-opt	ProjID
-opt	projanim
-opt	projhitanim
-opt	projremanim
-opt	projcancelanim
-opt	projscale
-opt	projremove
-opt	projremovetime
-opt	velocity
-opt	remvelocity
-opt	accel
-opt	velmul
-opt	projhits
-opt	projmisstime
-opt	projpriority
-opt	projsprpriority
-opt	projedgebound
-opt	projstagebound
-opt	projheightbound
-opt	offset
-opt	postype
-opt	projshadow
-opt	supermovetime
-opt	pausemovetime
-opt	afterimage.time
-
-sctrl	PlaySnd
-opt	volumescale
-opt	channel
-opt	lowpriority
-opt	freqmul
-opt	loop
-opt	pan
-opt	abspan
-doc	Plays back a sound. Prior to version 1.0 RC8, a volume parameter was used instead of volumescale. The volume parameter is no longer supported and is now ignored.
-req	value
-
-sctrl	LifeSet
-doc	Sets the player's life to the specified value.
-req	value
-
-sctrl	SuperPause
-doc	Freezes the gameplay and darkens the screen. While each player is frozen, no time passes for them. Use for a dramatic pause during the start of hyper attacks.
-opt	time
-opt	anim
-opt	sound
-opt	pos
-opt	darken
-opt	p2defmul
-opt	poweradd
-opt	unhittable
-
-sctrl	ExplodBindTime
-doc	Changes the position binding time of the player's explods.
-opt	ID
-opt	time
-
-sctrl	RemapPal
-doc	Changes one of the player's palettes to another.
-
-sctrl	AngleAdd
-doc	Adds to the drawing rotation angle used by AngleDraw.
-req	value
-
-sctrl	DefenceMulSet
-doc	Sets the player's defense multiplier. All damage the player takes is scaled by this amount.
-req	value
-
-sctrl	ForceFeedback
-doc	Creates force feedback for supported force feedback devices. This controller is not implemented in MUGEN 1.0. Parameters to the ForceFeedback controller may not be specified using arithmetic expressions. It is an exception in this regard.
-opt	waveform
-opt	time
-opt	freq
-opt	ampl
-opt	self
-
-sctrl	AngleDraw
-doc	Draws the player (for 1 frame) rotated about his axis by the angle set by the AngleSet controller. When facing right, a positive angle means a counterclockwise rotation.
-opt	value
-
-sctrl	VelAdd
-doc	Adds the specified amounts to the player's velocity. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
-opt	x
-opt	y
-
-sctrl	Null
-doc	Does nothing. May be used for temporarily disabling other state controllers by simply changing their type to Null.
-
-sctrl	BGPalFX
-doc	Same as PalFX, except that this affects the palette of the background and lifebars instead of the palette of the character. See the PalFX section for details on the parameters to BGPalFX.
-
-sctrl	AngleMul
-doc	Multiplies the drawing rotation angle used by AngleDraw by the specified factor.
-req	value
-
-sctrl	Pause
-opt	endcmdbuftime
-opt	movetime
-opt	pausebg
-doc	Pauses the game for the specified amount of time. Player and background updates are not carried out during this time.
-req	time
-
-sctrl	LifeAdd
-opt	kill
-opt	absolute
-doc	Adds the specified amount to the player's life, scaled by the player's defense multiplier if necessary.
-req	value
+sctrl	AfterImage
+opt	time	0
+opt	length	0
+opt	palcolor	0
+opt	palinvertall	0
+opt	palbright	0
+opt	palcontrast	0
+opt	palpostbright	0
+opt	paladd	0
+opt	palmul	0.0
+opt	timegap	0
+opt	framegap	0
+opt	trans	string
+doc	Enables player afterimage effects. The character's frames are stored in a history buffer, and are displayed after a delay as afterimages.
 
 sctrl	AfterImageTime
+req	time	0
 doc	Changes the duration of the player's afterimage effects, if currently enabled. If no afterimage effects are being displayed, this controller does nothing.\nKnown bugs: If the timegap parameter in the originating AfterImage controller is not set at 1, using this AfterImageTime will cause the frame positions to be reset.
-req	time
 
-sctrl	CtrlSet
-doc	Sets the player's control flag.
-req	value
+sctrl	AllPalFX
+opt	time	0
+opt	add	0	0	0
+opt	mul	0	0	0
+opt	sinadd	0	0	0	0
+opt	invertall	0
+opt	color	0
+doc	Same as PalFX, except that this affects the palette of the background and lifebars as well as the palette of all characters and explods (regardless of the ownpal parameter). See the PalFX section for details on the parameters to AllPalFX.
 
-sctrl	TargetVelAdd
-doc	Adds the specified amounts to all targets' velocities. A positive x velocity is in the direction that the target is facing, while a positive y velocity is downward on the screen.
-opt	x
-opt	y
-opt	ID
+sctrl	AngleAdd
+req	value	0.0
+doc	Adds to the drawing rotation angle used by AngleDraw.
 
-sctrl	PowerAdd
-doc	Adds the specified amount to the player's power.
-req	value
+sctrl	AngleDraw
+opt	value	0.0
+opt	scale	0.0	0.0
+doc	Draws the player (for 1 frame) rotated about his axis by the angle set by the AngleSet controller. When facing right, a positive angle means a counterclockwise rotation.\nRotation/scaling does not affect the player's collision boxes.
 
-sctrl	HitFallVel
-doc	If the player has been hit and is in a falling state, sets the player's velocities to the fall velocities (fall.xvel and fall.yvel) specified in the HitDef.
+sctrl	AngleMul
+req	value	0.0
+doc	Multiplies the drawing rotation angle used by AngleDraw by the specified factor.
 
-sctrl	SprPriority
-doc	Changes the player's sprite priority. Higher-priority sprites are drawn on top of lower-priority sprites.
-req	value
+sctrl	AngleSet
+req	value	0.0
+doc	Sets the drawing rotation angle used by AngleDraw. The angle is initialized at 0.
 
-sctrl	VarAdd
-doc	Adds to one of the player's working variables. Either a float variable or an int variable can be added to by this controller.
-req	v
-req	value
-req	fv
-req	value
+sctrl	AppendToClipboard
+req	text	string
+opt	params	exp	exp	exp	exp	exp	exp
+doc	This is the same as DisplayToClipboard, except that message text is added on a new line, instead of overwriting whatever text is already on the clipboard. See DisplayToClipboard for a format description.
 
-sctrl	Trans
-opt	alpha
-doc	Overrides the player's animation transparency parameters for current game tick. Useful for special effects.
-req	trans
+sctrl	AssertSpecial
+req	flag	string
+opt	flag2	string
+opt	flag3	string
+doc	This controller allows you to assert up to three special flags simultaneously. MUGEN will automatically "deassert" each flag at every game tick, so you must assert a flag for each tick that you want it to be active.\n\nThe flag name can be one of the following:\n\nintro\nTells MUGEN that the character is currently performing his intro\npose. Must be asserted on every tick while the intro pose is\nbeing performed.\ninvisible\nTurns the character invisible while asserted. Does not affect\ndisplay of afterimages.\nroundnotover\nTells MUGEN that the character is currently performing his win\npose. Should be asserted on every tick while the win pose is being\nperformed.\nnobardisplay\nDisables display of life, super bars, etc. while asserted.\nnoBG\nTurns off the background. The screen is cleared to black.\nnoFG\nDisables display of layer 1 of the stage (the foreground).\nnostandguard\nWhile asserted, disables standing guard for the character.\nnocrouchguard\nWhile asserted, disables crouching guard for the character.\nnoairguard\nWhile asserted, disables air guard for the character.\nnoautoturn\nWhile asserted, keeps the character from automatically turning\nto face the opponent.\nnojugglecheck\nWhile asserted, disables juggle checking. P2 can be juggled\nregardless of juggle points.\nnokosnd\nSuppresses playback of sound 11, 0 (the KO sound) for players\nwho are knocked out. For players whose KO sound echoes, nokosnd\nmust be asserted for 50 or more ticks after the player is KOed\nin order to suppress all echoes.\nnokoslow\nWhile asserted, keeps MUGEN from showing the end of the round in\nslow motion.\nnoshadow\nWhile asserted, disables display of this player's shadows.\nglobalnoshadow\nDisables display of all player, helper and explod shadows.\nnomusic\nWhile asserted, pauses playback of background music.\nnowalk\nWhile asserted, the player cannot enter his walk states, even if\nhe has control. Use to prevent run states from canceling into\nwalking.\ntimerfreeze\nWhile asserted, keeps the round timer from counting down. Useful\nto keep the round from timing over in the middle of a splash\nscreen.\nunguardable\nWhile asserted, all the asserting player's HitDefs become\nunblockable, i.e., their guardflags are ignored.
 
-sctrl	TargetBind
-doc	Binds the player's specified targets to a specified location relative to the player's axis.
-opt	time
-opt	ID
-opt	pos
-
-sctrl	HitOverride
-opt	slot
-opt	time
-opt	forceair
-doc	Defines a hit override. If the player is hit by an attack of the specified type, he will go to the specified state number instead of his default gethit behavior. Up to 8 hit overrides can be active at one time.
-req	attr
-req	stateno
-
-sctrl	PosAdd
-doc	Offsets the player's position by the specified amounts. The X coordinate is relative to the player's axis, with positive values moving in the direction that the player is facing. The Y coordinate\nis relative to the player's axis, with negative values moving up.
-opt	x
-opt	y
-
-sctrl	StopSnd
-doc	Stops any sound which is playing on the specified channel.
-req	channel
-
-sctrl	BindToTarget
-doc	Binds the player to a specified position relative to the specified target.
-opt	time
-opt	ID
-opt	pos
-
-sctrl	Gravity
-doc	Accelerates the player downwards, using the value of the player's "yaccel" constant.
-
-sctrl	HitBy
-doc	Temporarily specifies the types of hits that are be allowed hit to the player.
-opt	time
+sctrl	AttackDist
+req	value	0
+doc	Changes the value of the guard.dist parameter for the player's current HitDef. The guard.dist is the x-distance from P1 in which P2 will go\ninto a guard state if P2 is holding the direction away from P1.\nThe effect of guard.dist only takes effect when P1 has movetype = A.
 
 sctrl	AttackMulSet
+req	value	0.0
 doc	Sets the player's attack multiplier. All damage the player gives is scaled by this amount.
-req	value
 
-sctrl	GameMakeAnim
-doc	Creates a game animation, like a hit spark or a super charging effect. This controller has been superseded by Explod and is now considered deprecated. Support for it may be removed in future versions.
-opt	value
-opt	under
-opt	pos
-opt	random
+sctrl	BGPalFX
+opt	time	0
+opt	add	0	0	0
+opt	mul	0	0	0
+opt	sinadd	0	0	0	0
+opt	invertall	0
+opt	color	0
+doc	Same as PalFX, except that this affects the palette of the background and lifebars instead of the palette of the character. See the PalFX section for details on the parameters to BGPalFX.
+
+sctrl	BindToParent
+opt	time	0
+opt	facing	0
+opt	pos	0.0	0.0
+doc	If the player is a helper, binds the player to a specified position relative to its parent. If the player is not a helper, this controller does nothing.\nIf the player's parent is destroyed (for example, if it is a\nhelper, and executes DestroySelf), then the effect of\nBindToParent is terminated.
+
+sctrl	BindToRoot
+opt	time	0
+opt	facing	0
+opt	pos	0.0	0.0
+doc	If the player is a helper, binds the player to a specified position relative to its root. If the player is not a helper, this controller does nothing.\nIf the player's root is disabled for any reason, then the effect of\nBindToRoot is terminated.
+
+sctrl	BindToTarget
+opt	time	0
+opt	ID	0
+opt	pos	0.0	0.0	string
+doc	Binds the player to a specified position relative to the specified target.
+
+sctrl	ChangeAnim
+req	value	0
+opt	elem	0
+doc	Changes the action number of the player's animation.
 
 sctrl	ChangeAnim2
 doc	Like ChangeAnim, except this controller should be used if you have placed P2 in a custom state via a hit and wish to change P2's animation to one specified in P1's air file. For example, when making throws, use this to change P2 to a being-thrown animation.
 
-sctrl	HitFallDamage
-doc	When the player has been hit and is in a falling state, apply damage\nfrom the fall (specified in the hitdef) to the player.
-
-sctrl	TargetState
-opt	ID
-doc	Makes all targets change to the specified state number.
-req	value
-
-sctrl	TargetDrop
-doc	Drops all targets from the player's target list, except possibly for those having a specified target ID number. Useful for applying effects to only certain targets.
-opt	excludeID
-opt	keepone
-
-sctrl	VelMul
-doc	Multiplies the player's velocity by the specified amounts. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
-opt	x
-opt	y
-
-sctrl	Helper
-doc	Creates another instance of the player as a helper character.
-opt	helpertype
-opt	name
-opt	ID
-opt	pos
-opt	postype
-opt	facing
-opt	stateno
-opt	keyctrl
-opt	ownpal
-opt	supermovetime
-opt	pausemovetime
-opt	size.xscale
-opt	size.yscale
-opt	size.ground.back
-opt	size.ground.front
-opt	size.air.back
-opt	size.air.front
-opt	size.height
-opt	size.proj.doscale
-opt	size.head.pos
-opt	size.mid.pos
-opt	size.shadowoffset
-
-sctrl	VelSet
-doc	Sets the player's velocity to the specified values. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
-opt	x
-opt	y
-
-sctrl	EnvColor
-doc	Turns the whole screen a solid color, excepting foreground-layer animations like hit sparks and "ontop" explods. Foreground layers of the stage will not be visible.
-opt	value
-opt	time
-opt	under
-
-sctrl	ChangeAnim
-opt	elem
-doc	Changes the action number of the player's animation.
-req	value
-
-sctrl	StateTypeSet
-doc	Changes the current state type and move type. Useful for states that go from the ground into the air, etc.
-opt	statetype
-opt	movetype
-opt	physics
-
-sctrl	MoveHitReset
-doc	Resets the movehit flag to 0. That is, after executing MoveHitReset, the triggers MoveContact, MoveGuarded, and MoveHit will all return 0.
-
-sctrl	PosSet
-doc	Sets the player's position to the specified coordinates. The X coordinate is relative to the center of the screen, with positive values moving right. The Y coordinate is relative to the floor, with negative values moving up.
-opt	x
-opt	y
-
-sctrl	Width
-doc	Temporarily changes the size of the player's width bar for 1 tick. Useful for controlling the "pushing" behavior when the player makes contact with another or with the sides of the screen.
-opt	edge
-opt	player
-
-sctrl	VictoryQuote
-doc	Selects a victory quote from the player to display in the next victory screen.
-opt	value
-
-sctrl	AfterImage
-doc	Enables player afterimage effects. The character's frames are stored in a history buffer, and are displayed after a delay as afterimages.
-opt	time
-opt	length
-opt	palcolor
-opt	palinvertall
-opt	palbright
-opt	palcontrast
-opt	palpostbright
-opt	paladd
-opt	palmul
-opt	timegap
-opt	framegap
-opt	trans
-
-sctrl	HitFallSet
-doc	When the player has been hit, sets the player's fall variables.
-opt	value
-opt	xvel
-opt	yvel
-
-sctrl	VarRangeSet
-opt	first
-opt	last
-doc	Sets a contiguous range of the player's working variables to the same value. Either float variables or int variables can be set by this controller, but not both at the same time.
-req	value
-req	fvalue
-
-sctrl	VarRandom
-opt	range
-doc	Sets the specified int variable to a random value. Float variables cannot be set by this controller.
-req	v
-
-sctrl	PosFreeze
-doc	Temporarily freezes the player's position.
-opt	value
-
-sctrl	TargetVelSet
-doc	Sets all targets' velocities to the specified values. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
-opt	x
-opt	y
-opt	ID
-
-sctrl	HitDef
-opt	hitflag
-opt	guardflag
-opt	affectteam
-opt	animtype
-opt	air.animtype
-opt	fall.animtype
-opt	priority
-opt	damage
-opt	pausetime
-opt	guard.pausetime
-opt	sparkno
-opt	guard.sparkno
-opt	sparkxy
-opt	hitsound
-opt	guardsound
-opt	ground.type
-opt	air.type
-opt	ground.slidetime
-opt	guard.slidetime
-opt	ground.hittime
-opt	guard.hittime
-opt	air.hittime
-opt	guard.ctrltime
-opt	guard.dist
-opt	yaccel
-opt	ground.velocity
-opt	guard.velocity
-opt	air.velocity
-opt	airguard.velocity
-opt	ground.cornerpush.veloff
-opt	air.cornerpush.veloff
-opt	down.cornerpush.veloff
-opt	guard.cornerpush.veloff
-opt	airguard.cornerpush.veloff
-opt	airguard.ctrltime
-opt	air.juggle
-opt	mindist
-opt	maxdist
-opt	snap
-opt	p1sprpriority
-opt	p2sprpriority
-opt	p1facing
-opt	p1getp2facing
-opt	p2facing
-opt	p1stateno
-opt	p2stateno
-opt	p2getp1state
-opt	forcestand
-opt	fall
-opt	fall.xvelocity
-opt	fall.yvelocity
-opt	fall.recover
-opt	fall.recovertime
-opt	fall.damage
-opt	air.fall
-opt	forcenofall
-opt	down.velocity
-opt	down.hittime
-opt	down.bounce
-opt	id
-opt	chainID
-opt	nochainID
-opt	hitonce
-opt	kill
-opt	guard.kill
-opt	fall.kill
-opt	numhits
-opt	getpower
-opt	givepower
-opt	palfx.time
-opt	palfx.mul
-opt	palfx.add
-opt	envshake.time
-opt	envshake.freq
-opt	envshake.ampl
-opt	envshake.phase
-opt	fall.envshake.time
-opt	fall.envshake.freq
-opt	fall.envshake.ampl
-opt	fall.envshake.phase
-doc	Defines a single hit of the player's attack. If the player's Clsn1 box (red) comes in contact with his opponent's Clsn2 box (blue), and the HitDef was define on or before that particular point in time, then the specified effect will be applied. This is one of the more complex, but most commonly-used controllers.\nA single HitDef is valid only for a single hit. To make a move hit several times, you must trigger more than one HitDef during the attack.
-req	attr
-
-sctrl	TargetPowerAdd
-opt	ID
-doc	Adds the specified amount to all targets' power.
-req	value
-
 sctrl	ChangeState
-opt	ctrl
-opt	anim
+req	value	0
+opt	ctrl	0
+opt	anim	0
 doc	Changes the state number of the player.
-req	value
-
-sctrl	TargetLifeAdd
-opt	ID
-opt	kill
-opt	absolute
-doc	Adds the specified amount to all targets' life, scaled by the targets' defense multipliers if necessary.
-req	value
-
-sctrl	FallEnvShake
-doc	Shakes the screen using the fall.envshake parameters set by an attack (see HitDef controller). This controller is effective only if GetHitVar(fall.envshake.time) is not zero, and it sets GetHitVar(fall.envshake.time) to zero after being executed. This controller is used in common1.cns to shake the screen when a player falls, and is not normally useful otherwise.
-
-sctrl	SelfState
-doc	Like ChangeState, except that this changes a player back to a state in his own state data. Use this when you have placed an opponent player in a custom state via an attack, and wish to restore the opponent to his own states.
-
-sctrl	TargetFacing
-opt	ID
-doc	Turns all targets to face a specified direction relative to the player.
-req	value
-
-sctrl	SndPan
-doc	Changes the panning of a currently playing sound. This controller may be continually triggered to smoothly move a sound across the sound field or to have a sound follow the player.
-req	channel
-req	pan
-
-sctrl	ScreenBound
-doc	Specifies whether or not the player's movement should be constrained to the screen or not. Also determines whether the camera should move to follow the player or not. The results of this controller are valid for 1 tick.
-opt	value
-opt	movecamera
-
-sctrl	PlayerPush
-doc	Disables the player's push checking for one tick. Push checking keeps players from overlapping one another. By temporarily disabling push checking, dodge-type moves in which the player passes through another (but can still be hit) can be implemented.
-req	value
-
-sctrl	PowerSet
-doc	Sets the amount of power that the player has.
-req	value
-
-sctrl	ReversalDef
-doc	Defines a reversal. If one of P2's Clns1 boxes comes in contact with one of P1's Clsn1 boxes and a ReversalDef is active, then P1 will reverse P2's attack. Use with p1stateno (and optionally p2stateno) for creating reversal attacks. ReversalDefs take the HitDef parameters pausetime, sparkno, hitsound, p1stateno, and p2stateno, plus:
-
-sctrl	ParentVarSet
-doc	If the player is a helper, sets one of the parent's working variables. Either a float variable or an int variable can be set by this controller. Does nothing if the player is not a helper.
-req	v
-req	value
-req	fv
-req	value
-
-sctrl	EnvShake
-opt	freq
-opt	ampl
-opt	phase
-doc	Causes the screen to shake vertically.
-req	time
-
-sctrl	AllPalFX
-doc	Same as PalFX, except that this affects the palette of the background and lifebars as well as the palette of all characters and explods (regardless of the ownpal parameter). See the PalFX section for details on the parameters to AllPalFX.
-
-sctrl	HitVelSet
-doc	This controller is deprecated. When the player has been hit, sets the desired components of the player's velocity to the appropriate gethit velocities.
-opt	x
-opt	y
-
-sctrl	AssertSpecial
-doc	This controller allows you to assert up to three special flags simultaneously. MUGEN will automatically "deassert" each flag at every game tick, so you must assert a flag for each tick that you want it to be active.
-
-sctrl	ParentVarAdd
-doc	If the player is a helper, adds to one of the player's parent's working variables. Either a float variable or an int variable can be added to by this controller. If the player is not a helper, this controller does nothing.
-req	v
-req	value
-req	fv
-req	value
-
-sctrl	BindToRoot
-doc	If the player is a helper, binds the player to a specified position relative to its root. If the player is not a helper, this controller does nothing.
-opt	time
-opt	facing
-opt	pos
-
-sctrl	AngleSet
-doc	Sets the drawing rotation angle used by AngleDraw. The angle is initialized at 0.
-req	value
-
-sctrl	PalFX
-doc	Applies temporary effects the player's palette. These will also affect the palette of any explods and helpers the player owns, unless they have specified ownpal = 1.
-opt	time
-opt	add
-opt	mul
-opt	sinadd
-opt	invertall
-opt	color
-
-sctrl	NotHitBy
-doc	Temporarily specifies types of hits that are not allowed to hit the player.
-opt	time
-
-sctrl	Explod
-opt	ID
-opt	pos
-opt	postype
-opt	facing
-opt	vfacing
-opt	bindtime
-opt	vel
-opt	accel
-opt	random
-opt	removetime
-opt	supermove
-opt	supermovetime
-opt	pausemovetime
-opt	scale
-opt	sprpriority
-opt	ontop
-opt	shadow
-opt	ownpal
-opt	removeongethit
-opt	ignorehitpause
-opt	trans
-doc	The Explod controller is a flexible tool for displaying animations such as sparks, dust and other visual effects. Its functionality includes that of GameMakeAnim, which is now deprecated.
-req	anim
 
 sctrl	ClearClipboard
 doc	Erases any text currently on the player's clipboard.
 
-sctrl	BindToParent
-doc	If the player is a helper, binds the player to a specified position relative to its parent. If the player is not a helper, this controller does nothing.
-opt	time
-opt	facing
-opt	pos
+sctrl	CtrlSet
+req	value	0
+doc	Sets the player's control flag.
 
-sctrl	AttackDist
-doc	Changes the value of the guard.dist parameter for the player's current HitDef. The guard.dist is the x-distance from P1 in which P2 will go\ninto a guard state if P2 is holding the direction away from P1.\nThe effect of guard.dist only takes effect when P1 has movetype = A.
-req	value
+sctrl	DefenceMulSet
+req	value	0.0
+doc	Sets the player's defense multiplier. All damage the player takes is scaled by this amount.\nThe LifeAdd controller is not affected by the player's defense multiplier.
+
+sctrl	DestroySelf
+opt	recursive	0
+opt	removeexplods	0
+doc	If called by a helper-type character, DestroySelf causes that character to be removed from the field of play. DestroySelf is not valid for non-helper characters.\nAny players or explods bound to the helper will be forcefully unbound when DestroySelf\nis executed.\nAny unremoved explods belonging to a destroyed helper will become orphaned.
+
+sctrl	DisplayToClipboard
+req	text	string
+opt	params	exp	exp	exp	exp	exp	exp
+doc	This controller is only useful for debugging. DisplayToClipboard clears the player clipboard and prints a specified message to it. Display of the player clipboards is enabled in debug mode (press Ctrl+D).
+
+sctrl	EnvColor
+opt	value	0
+opt	time	0
+opt	under	0
+doc	Turns the whole screen a solid color, excepting foreground-layer animations like hit sparks and "ontop" explods. Foreground layers of the stage will not be visible.
+
+sctrl	EnvShake
+req	time	0
+opt	freq	0.0
+opt	ampl	0
+opt	phase	0.0
+doc	Causes the screen to shake vertically.
+
+sctrl	Explod
+req	anim	0
+opt	ID	0
+opt	space	string
+opt	pos	0.0	0.0
+opt	facing	0
+opt	vfacing	0
+opt	bindID	0
+opt	bindtime	0
+opt	vel	0.0	0.0
+opt	accel	0.0	0.0
+opt	removetime	0
+opt	supermovetime	0
+opt	pausemovetime	0
+opt	scale	0.0	0.0
+opt	angle	0.0
+opt	yangle	0.0
+opt	xangle	0.0
+opt	sprpriority	0
+opt	ontop	0
+opt	shadow	0
+opt	ownpal	0
+opt	remappal	0	0
+opt	removeongethit	0
+opt	ignorehitpause	0
+opt	trans	string
+opt	postype	string
+opt	random	0	0
+opt	supermove	0
+doc	The Explod controller is a flexible tool for displaying animations such as sparks, dust and other visual effects. Its functionality includes that of GameMakeAnim, which is now deprecated.\nThe position of an explod that is bound to a player is determined only after\nall player updates have completed (compared to helpers, which are created\nrelative to the player's immediate position when the controller was executed).\nThis behavior is necessary to make explods bind properly to the player's\nscreen position.\nFor example, assume the player has an x velocity of 5 and a position of (160,0).\nIf an explod is created with an offset of 0,0 relative to p1, then the explod's\nactual screen position will be 165,0.
+
+sctrl	ExplodBindTime
+opt	ID	0
+opt	time	0
+doc	Changes the position binding time of the player's explods.
+
+sctrl	ForceFeedback
+opt	waveform	string
+opt	time	0
+opt	freq	0	0.0	0.0	0.0
+opt	ampl	0	0.0	0.0	0.0
+opt	self	0
+doc	Creates force feedback for supported force feedback devices. This controller is not implemented in MUGEN 1.0.\nParameters to the ForceFeedback controller may not be specified using arithmetic expressions. It is an exception in this regard.
+
+sctrl	FallEnvShake
+doc	Shakes the screen using the fall.envshake parameters set by an attack (see HitDef controller). This controller is effective only if GetHitVar(fall.envshake.time) is not zero, and it sets GetHitVar(fall.envshake.time) to zero after being executed. This controller is used in common1.cns to shake the screen when a player falls, and is not normally useful otherwise.
+
+sctrl	GameMakeAnim
+opt	value	0
+opt	under	0
+opt	pos	0.0
+opt	random	0
+doc	Creates a game animation, like a hit spark or a super charging effect. This controller has been superseded by Explod and is now considered deprecated. Support for it may be removed in future versions.
+
+sctrl	Gravity
+doc	Accelerates the player downwards, using the value of the player's "yaccel" constant.
+
+sctrl	Helper
+opt	helpertype	string
+opt	name	string
+opt	ID	0
+opt	pos	0.0
+opt	postype	string
+opt	facing	0
+opt	stateno	0
+opt	keyctrl	0
+opt	ownpal	0
+opt	remappal	0	0
+opt	supermovetime	0
+opt	pausemovetime	0
+opt	size.xscale	0.0
+opt	size.yscale	0.0
+opt	size.ground.back	0
+opt	size.ground.front	0
+opt	size.air.back	0
+opt	size.air.front	0
+opt	size.height	0
+opt	size.proj.doscale	0
+opt	size.head.pos	0	0
+opt	size.mid.pos	0	0
+opt	size.shadowoffset	0
+doc	Creates another instance of the player as a helper character.
+
+sctrl	HitAdd
+req	value	0
+doc	Adds to the current combo counter.
+
+sctrl	HitBy
+req	value	string
+opt	time	0
+doc	Temporarily specifies the types of hits that are be allowed hit to the player.\nThe player has two hit attribute slots, which can be set using the\nvalue or value2 parameters to the HitBy controller. These slots can\nalso be set by the NotHitBy controller. When a slot is set, it gets\na timer (the effective time) which counts down toward zero. If the\ntimer has not yet reached zero, the slot is considered to be active.\nThe player can be hit by a HitDef only if that HitDef's attribute\nappears in all currently active slots.\nUsing the HitBy controller sets the specified slot to contain only\nthose hit attributes which appear in the HitBy attribute string.
+
+sctrl	HitDef
+req	attr	string
+opt	hitflag	string
+opt	guardflag	string
+opt	affectteam	string
+opt	animtype	string
+opt	air.animtype	string
+opt	fall.animtype	string
+opt	priority	0	string
+opt	damage	0	0
+opt	pausetime	0	0
+opt	guard.pausetime	0	0
+opt	sparkno	0
+opt	guard.sparkno	0
+opt	sparkxy	0	0
+opt	hitsound	0	0
+opt	guardsound	0	0
+opt	ground.type	string
+opt	air.type	string
+opt	ground.slidetime	0
+opt	guard.slidetime	0
+opt	ground.hittime	0
+opt	guard.hittime	0
+opt	air.hittime	0
+opt	guard.ctrltime	0
+opt	guard.dist	0
+opt	yaccel	0.0
+opt	ground.velocity	0.0	0.0
+opt	guard.velocity	0.0
+opt	air.velocity	0.0	0.0
+opt	airguard.velocity	0.0	0.0
+opt	ground.cornerpush.veloff	0.0
+opt	air.cornerpush.veloff	0.0
+opt	down.cornerpush.veloff	0.0
+opt	guard.cornerpush.veloff	0.0
+opt	airguard.cornerpush.veloff	0.0
+opt	airguard.ctrltime	0
+opt	air.juggle	0
+opt	mindist	0	0
+opt	maxdist	0	0
+opt	snap	0	0
+opt	p1sprpriority	0
+opt	p2sprpriority	0
+opt	p1facing	0
+opt	p1getp2facing	0
+opt	p2facing	0
+opt	p1stateno	0
+opt	p2stateno	0
+opt	p2getp1state	0
+opt	forcestand	0
+opt	fall	0
+opt	fall.xvelocity	0.0
+opt	fall.yvelocity	0.0
+opt	fall.recover	0
+opt	fall.recovertime	0
+opt	fall.damage	0
+opt	air.fall	0
+opt	forcenofall	0
+opt	down.velocity	0.0	0.0
+opt	down.hittime	0
+opt	down.bounce	0
+opt	id	0
+opt	chainID	0
+opt	nochainID	0
+opt	hitonce	0
+opt	kill	0
+opt	guard.kill	0
+opt	fall.kill	0
+opt	numhits	0
+opt	getpower	0	0
+opt	givepower	0	0
+opt	palfx.time	0
+opt	palfx.mul	0	0	0
+opt	palfx.add	0	0	0
+opt	envshake.time	0
+opt	envshake.freq	0.0
+opt	envshake.ampl	0
+opt	envshake.phase	0.0
+opt	fall.envshake.time	0
+opt	fall.envshake.freq	0.0
+opt	fall.envshake.ampl	0
+opt	fall.envshake.phase	0.0
+doc	Defines a single hit of the player's attack. If the player's Clsn1 box (red) comes in contact with his opponent's Clsn2 box (blue), and the HitDef was define on or before that particular point in time, then the specified effect will be applied. This is one of the more complex, but most commonly-used controllers.\nA single HitDef is valid only for a single hit. To make a move hit several times, you must trigger more than one HitDef during the attack.\nThe behavior of HitDef is undefined when executed from a\n[Statedef -2] block while the player has another player's\nstate and animation data.
+
+sctrl	HitFallDamage
+doc	When the player has been hit and is in a falling state, apply damage\nfrom the fall (specified in the hitdef) to the player.
+
+sctrl	HitFallSet
+opt	value	0
+opt	xvel	0.0
+opt	yvel	0.0
+doc	When the player has been hit, sets the player's fall variables.
+
+sctrl	HitFallVel
+doc	If the player has been hit and is in a falling state, sets the player's velocities to the fall velocities (fall.xvel and fall.yvel) specified in the HitDef.
+
+sctrl	HitOverride
+req	attr	string
+req	stateno	0
+opt	slot	0
+opt	time	0
+opt	forceair	0
+doc	Defines a hit override. If the player is hit by an attack of the specified type, he will go to the specified state number instead of his default gethit behavior. Up to 8 hit overrides can be active at one time.\nIf P1 has one or more active HitOverrides, P1 will not be affected by any\nof P2's matching HitDefs that have any of the following characteristics:\n\np1stateno parameter value is not -1\np2getp1state parameter value is 1
+
+sctrl	HitVelSet
+opt	x	0
+opt	y	0
+doc	This controller is deprecated.\nWhen the player has been hit, sets the desired components of the player's velocity to the appropriate gethit velocities.\nObsolete.
+
+sctrl	LifeAdd
+req	value	0
+opt	kill	0
+opt	absolute	0
+doc	Adds the specified amount to the player's life, scaled by the player's defense multiplier if necessary.
+
+sctrl	LifeSet
+req	value	0
+doc	Sets the player's life to the specified value.
+
+sctrl	MakeDust
+opt	pos	0
+opt	pos2	0.0
+opt	spacing	0
+doc	This controller is deprecated; use the Explod controller.\nCreates dust effects.
+
+sctrl	ModifyExplod
+req	anim	0
+opt	ID	0
+opt	space	string
+opt	pos	0.0	0.0
+opt	facing	0
+opt	vfacing	0
+opt	bindID	0
+opt	bindtime	0
+opt	vel	0.0	0.0
+opt	accel	0.0	0.0
+opt	removetime	0
+opt	supermovetime	0
+opt	pausemovetime	0
+opt	scale	0.0	0.0
+opt	angle	0.0
+opt	yangle	0.0
+opt	xangle	0.0
+opt	sprpriority	0
+opt	ontop	0
+opt	shadow	0
+opt	ownpal	0
+opt	remappal	0	0
+opt	removeongethit	0
+opt	ignorehitpause	0
+opt	trans	string
+opt	postype	string
+opt	random	0	0
+opt	supermove	0
+doc	Modifies the parameters of an existing Explod. Syntax is basically\nthe same as Explod. However, this controller is subject to future\nchange. Any code relying on this controller is not guaranteed to\nwork in the future.
+
+sctrl	MoveHitReset
+doc	Resets the movehit flag to 0. That is, after executing MoveHitReset, the triggers MoveContact, MoveGuarded, and MoveHit will all return 0.
+
+sctrl	NotHitBy
+req	value	string
+opt	time	0
+doc	Temporarily specifies types of hits that are not allowed to hit the player.\nThe player has two hit attribute slots, which can be set using the\n"value" or "value2" parameters to the NotHitBy controller. These\nslots can also be set by the HitBy controller. When a slot is set,\nit gets a timer (the effective time) which counts down toward zero.\nIf the timer has not yet reached zero, the slot is considered to be\nactive. The player can be hit by a HitDef only if that HitDef's\nattribute appears in all currently active slots.\nUsing the NotHitBy controller sets the specified slot to contain all\nhit attributes except those specified in the NotHitBy attribute\nstring.
+
+sctrl	Null
+doc	Does nothing. May be used for disabling other state controllers by changing their type to Null.\nAny triggers associated with the controller will still be evaluated.
+
+sctrl	Offset
+opt	x	0.0
+opt	y	0.0
+doc	Changes the player's display offset. The player is drawn shifted from his axis by this amount.
+
+sctrl	PalFX
+opt	time	0
+opt	add	0	0	0
+opt	mul	0	0	0
+opt	sinadd	0	0	0	0
+opt	invertall	0
+opt	color	0
+doc	Applies temporary effects the player's palette. These will also affect the palette of any explods and helpers the player owns, unless they have set ownpal to a nonzero value.
+
+sctrl	ParentVarAdd
+req	v	0
+req	value	0
+req	fv	0
+req	value	0.0
+doc	If the player is a helper, adds to one of the player's parent's working variables. Either a float variable or an int variable can be added to by this controller. If the player is not a helper, this controller does nothing.\nDue to historical reasons, note that the alternate VarAdd\nsyntax listed above matches neither the syntax for variable\nassignment within an expression, nor the syntax for variable\naddition within an expression.\nIf you have placed P2 in a custom state through a successful hit, do\nnot use variable assignment within the custom states. Otherwise, you\nwill overwrite P2's parent's variables, which can cause unintended\nmalfunction of the opponent player.\nWarning: System variables (sysvar, sysfvar) cannot be used within this controller.
+
+sctrl	ParentVarSet
+req	v	0
+req	value	0
+req	fv	0
+req	value	0.0
+doc	If the player is a helper, sets one of the parent's working variables. Either a float variable or an int variable can be set by this controller. Does nothing if the player is not a helper.\nDue to historical reasons, note that the alternate variable\nassignment syntax listed above does not exactly match the syntax for\nvariable assignment within an expression.\nIf you have placed P2 in a custom state through a successful hit, do\nnot use variable assignment within the custom states. Otherwise, you\nwill overwrite P2's parent's variables, which can cause unintended\nmalfunction of the opponent player.\nWarning: System variables (sysvar, sysfvar) cannot be used within this controller.
+
+sctrl	Pause
+req	time	0
+opt	endcmdbuftime	0
+opt	movetime	0
+opt	pausebg	0
+doc	Pauses the game for the specified amount of time. Player and background updates are not carried out during this time.\nExecuting a Pause controller during the pausetime of another\nwill cancel out the effect of the previous Pause controller.\nExecuting a Pause during a superpause will delay the effects\nof the pause until after the superpause has ended.
+
+sctrl	PlayerPush
+req	value	0
+doc	Disables the player's push checking for one tick. Push checking keeps players from overlapping one another. By temporarily disabling push checking, dodge-type moves in which the player passes through another (but can still be hit) can be implemented.
+
+sctrl	PlaySnd
+req	value	0	0
+opt	volumescale	0.0
+opt	channel	0
+opt	lowpriority	0
+opt	freqmul	0.0
+opt	loop	0
+opt	pan	0
+opt	abspan	0
+doc	Plays back a sound.\n\nPrior to version 1.0 RC8, a volume parameter was used instead of\nvolumescale. The volume parameter is no longer supported and is\nnow ignored.
+
+sctrl	PosAdd
+opt	x	0.0
+opt	y	0.0
+doc	Offsets the player's position by the specified amounts. The X coordinate is relative to the player's axis, with positive values moving in the direction that the player is facing. The Y coordinate\nis relative to the player's axis, with negative values moving up.
+
+sctrl	PosFreeze
+opt	value	0
+doc	Temporarily freezes the player's position.
+
+sctrl	PosSet
+opt	x	0.0
+opt	y	0.0
+doc	Sets the player's position to the specified coordinates. The X coordinate is relative to the center of the screen, with positive values moving right. The Y coordinate is relative to the floor, with negative values moving up.
+
+sctrl	PowerAdd
+req	value	0
+doc	Adds the specified amount to the player's power.
+
+sctrl	PowerSet
+req	value	0
+doc	Sets the amount of power that the player has.
+
+sctrl	Projectile
+opt	ProjID	0
+opt	projanim	0
+opt	projhitanim	0
+opt	projremanim	0
+opt	projcancelanim	0
+opt	projscale	0.0	0.0
+opt	projremove	0
+opt	projremovetime	0
+opt	velocity	0.0	0.0
+opt	remvelocity	0.0	0.0
+opt	accel	0.0	0.0
+opt	velmul	0.0	0.0
+opt	projhits	0
+opt	projmisstime	0
+opt	projpriority	0
+opt	projsprpriority	0
+opt	projedgebound	0
+opt	projstagebound	0
+opt	projheightbound	0	0
+opt	offset	0	0
+opt	postype	string
+opt	projshadow	0
+opt	supermovetime	0
+opt	pausemovetime	0
+opt	ownpal	0
+opt	remappal	0	0
+opt	afterimage.time	0
+opt	afterimage.length	0
+opt	afterimage.palcolor	0
+opt	afterimage.palinvertall	0
+opt	afterimage.palbright	0
+opt	afterimage.palcontrast	0
+opt	afterimage.palpostbright	0
+opt	afterimage.paladd	0
+opt	afterimage.palmul	0.0
+opt	afterimage.timegap	0
+opt	afterimage.framegap	0
+opt	afterimage.trans	string
+doc	Creates a projectile for the player. The Projectile controller takes all the parameters of the HitDef controller, which control the HitDef for the projectile. In addition, Projectile has the following additional parameters:\nAll projectiles created by helpers immediately become owned by the root.\nThe behavior of a projectile's HitDef is undefined when executed from a\n[Statedef -2] block while the player has another player's\nstate and animation data.
+
+sctrl	RemapPal
+opt	source	0	0
+opt	dest	0	0
+doc	Changes one of the player's palettes to another.\nPalette mappings are not transitive; i.e. mapping 1,0 to 2,0 and 2,0 to 3,0\nwill not map 1,0 to 3,0.\nIn 1.1 and newer, each player is allowed up to 8 different palette mappings\nat the same time.\nSubsequent calls of RemapPal will fail if the source pair is not already\nbeing mapped.  Unused mappings can be removed by setting dst_pal_grp to -1\nfor a given source pair.
+
+sctrl	RemoveExplod
+opt	ID	0
+doc	Removes all of a player's explods, or just the explods with a specified ID number.
+
+sctrl	ReversalDef
+req	reversal.attr	string
+doc	Defines a reversal. If one of P2's Clns1 boxes comes in contact with one of P1's Clsn1 boxes and a ReversalDef is active, then P1 will reverse P2's attack. Use with p1stateno (and optionally p2stateno) for creating reversal attacks.\nReversalDefs take the HitDef parameters pausetime, sparkno, hitsound, p1stateno, and p2stateno, plus:\nThe sparkxy parameter is treated as an offset to P2's hitdef's sparkxy. The MoveHit trigger can be used to detect if P1 successfully reversed P2.
+
+sctrl	ScreenBound
+opt	value	0
+opt	movecamera	0	0
+doc	Specifies whether or not the player's movement should be constrained to the screen or not. Also determines whether the camera should move to follow the player or not. The results of this controller are valid for 1 tick.
+
+sctrl	SelfState
+doc	Like ChangeState, except that this changes a player back to a state in his own state data. Use this when you have placed an opponent player in a custom state via an attack, and wish to restore the opponent to his own states.
+
+sctrl	SprPriority
+req	value	0
+doc	Changes the player's sprite priority. Higher-priority sprites are drawn on top of lower-priority sprites.
+
+sctrl	StateTypeSet
+opt	statetype	string
+opt	movetype	string
+opt	physics	string
+doc	Changes the current state type and move type. Useful for states that go from the ground into the air, etc.
+
+sctrl	SndPan
+req	channel	0
+req	pan	0
+doc	Changes the panning of a currently playing sound. This controller may be continually triggered to smoothly move a sound across the sound field or to have a sound follow the player.
+
+sctrl	StopSnd
+req	channel	0
+doc	Stops any sound which is playing on the specified channel.
+
+sctrl	SuperPause
+opt	time	0
+opt	anim	0
+opt	sound	0	0
+opt	pos	0.0
+opt	darken	0
+opt	p2defmul	0.0
+opt	poweradd	0
+opt	unhittable	0
+doc	Freezes the gameplay and darkens the screen. While each player is frozen, no time passes for them. Use for a dramatic pause during the start of hyper attacks.\nIf the Pause controller was previously executed, and the action is\nstill paused, executing a SuperPause will preempt the Pause\ncontroller's effects. During the SuperPause, the time left until\nthe Pause controller's effects expires will not count down.
+
+sctrl	TargetBind
+opt	time	0
+opt	ID	0
+opt	pos	0.0
+doc	Binds the player's specified targets to a specified location relative to the player's axis.
+
+sctrl	TargetDrop
+opt	excludeID	0
+opt	keepone	0
+doc	Drops all targets from the player's target list, except possibly for those having a specified target ID number. Useful for applying effects to only certain targets.
+
+sctrl	TargetFacing
+req	value	0
+opt	ID	0
+doc	Turns all targets to face a specified direction relative to the player.
+
+sctrl	TargetLifeAdd
+req	value	0
+opt	ID	0
+opt	kill	0
+opt	absolute	0
+doc	Adds the specified amount to all targets' life, scaled by the targets' defense multipliers if necessary.
+
+sctrl	TargetPowerAdd
+req	value	0
+opt	ID	0
+doc	Adds the specified amount to all targets' power.
+
+sctrl	TargetState
+req	value	0
+opt	ID	0
+doc	Makes all targets change to the specified state number.
+
+sctrl	TargetVelAdd
+opt	x	0.0
+opt	y	0.0
+opt	ID	0
+doc	Adds the specified amounts to all targets' velocities. A positive x velocity is in the direction that the target is facing, while a positive y velocity is downward on the screen.
+
+sctrl	TargetVelSet
+opt	x	0.0
+opt	y	0.0
+opt	ID	0
+doc	Sets all targets' velocities to the specified values. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+
+sctrl	Trans
+req	trans	string
+opt	alpha	0	0
+doc	Overrides the player's animation transparency parameters for current game tick. Useful for special effects.
+
+sctrl	Turn
+doc	Instantly turns the player to face the opposite direction. Does not play a turning animation.
+
+sctrl	VarAdd
+req	v	0
+req	value	0
+req	fv	0
+req	value	0.0
+doc	Adds to one of the player's working variables. Either a float variable or an int variable can be added to by this controller.\nDue to historical reasons, note that the alternate VarAdd\nsyntax listed above matches neither the syntax for variable\nassignment within an expression, nor the syntax for variable\naddition within an expression.\nIf you have placed P2 in a custom state through a successful hit, do\nnot use variable assignment within the custom states. Otherwise, you\nwill overwrite P2's variables, which can cause unintended\nmalfunction of the opponent player.
+
+sctrl	VarRandom
+req	v	0
+opt	range	0
+doc	Sets the specified int variable to a random value. Float variables cannot be set by this controller.\nIf you have placed P2 in a custom state through a successful hit, do\nnot use variable assignment within the custom states. Otherwise, you\nwill overwrite P2's variables, which can cause unintended\nmalfunction of the opponent player.
+
+sctrl	VarRangeSet
+req	value	0
+req	fvalue	0.0
+opt	first	0
+opt	last	0
+doc	Sets a contiguous range of the player's working variables to the same value. Either float variables or int variables can be set by this controller, but not both at the same time.\nIf you have placed P2 in a custom state through a successful hit, do\nnot use variable assignment within the custom states. Otherwise, you\nwill overwrite P2's variables, which can cause unintended\nmalfunction of the opponent player.
+
+sctrl	VarSet
+req	v	0
+req	value	0
+req	fv	0
+req	value	0.0
+doc	Sets one of the player's working variables. Either a float variable or an int variable can be set by this controller, but not both at the same time.\nDue to historical reasons, note that the alternate variable\nassignment syntax listed above does not exactly match the syntax for\nvariable assignment within an expression.\nIf you have placed P2 in a custom state through a successful hit, do\nnot use variable assignment within the custom states. Otherwise, you\nwill overwrite P2's variables, which can cause unintended\nmalfunction of the opponent player.
+
+sctrl	VelAdd
+opt	x	0.0
+opt	y	0.0
+doc	Adds the specified amounts to the player's velocity. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+
+sctrl	VelMul
+opt	x	0.0
+opt	y	0.0
+doc	Multiplies the player's velocity by the specified amounts. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+
+sctrl	VelSet
+opt	x	0.0
+opt	y	0.0
+doc	Sets the player's velocity to the specified values. A positive x velocity is in the direction that the player is facing, while a positive y velocity is downward on the screen.
+
+sctrl	VictoryQuote
+opt	value	0
+doc	Selects a victory quote from the player to display in the next victory screen.\nThis controller can be called by any player at any time during a match; however\nonly the winning player will affect the quote that is shown.\nThis controller only affects the victory screen immediately following the current match.\nThis controller has no effect if executed by a helper.\nThe actual victory quotes are specified in the [Quotes] group of the player's constants file.
+
+sctrl	Width
+opt	edge	0	0
+opt	player	0	0
+doc	Temporarily changes the size of the player's width bar for 1 tick. Useful for controlling the "pushing" behavior when the player makes contact with another or with the sides of the screen.\nWhen collision box display is enabled, the edge width bar is\ndisplayed in orange, and the player width bar is displayed in\nyellow. Where they overlap, the overlapping region is displayed in\nbright yellow.
 
 trigger	P2BodyDist
 fmt	P2BodyDist
@@ -631,7 +721,7 @@ doc	Returns 1 if the player is still able to fight, 0 if the player has been KOe
 
 trigger	GameHeight
 fmt	GameHeight
-doc	Returns the height of the game space in the player's local coordinate space.\nThe game space is defined as a spatial mapping to the visible area of the screen\nin which players interact.  Intuitively, it can be thought of as encompassing the\ngraphical area of the game.\nThe dimensions of the game space is specified by the GameWidth and GameHeight\nparameters in mugen.cfg.
+doc	Returns the height of the game space in the player's local coordinate space.\nThe game space is defined as a spatial mapping to the visible area of the screen\nin which players interact. Intuitively, it can be thought of as encompassing the\ngraphical area of the game.\nThe dimensions of the game space is specified by the GameWidth and GameHeight\nparameters in mugen.cfg.
 
 trigger	CanRecover
 fmt	CanRecover
@@ -651,7 +741,7 @@ doc	NumPartner returns the number of partners that exist. Neutral players and no
 
 trigger	ProjHitTime
 fmt	ProjHitTime(0)
-doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact successfully hit the opponent and had the specified ID number, then ProjHit returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked.\nIf no projectile meets all the above conditions, then ProjHitTime returns -1.
+doc	This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact successfully hit the opponent and had the specified ID number, then ProjHit returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked.\nIf no projectile meets all the above conditions, then ProjHitTime returns -1.
 
 trigger	Const480p
 fmt	Const480p(0)
@@ -663,7 +753,7 @@ doc	Triggers if the user has input the specified command.
 
 trigger	GameWidth
 fmt	GameHeight
-doc	Returns the width of the game space in the player's local coordinate space.\nThe game space is defined as a spatial mapping to the visible area of the screen\nin which players interact.  Intuitively, it can be thought of as encompassing the\ngraphical area of the game.\nThe dimensions of the game space is specified by the GameWidth and GameHeight\nparameters in mugen.cfg.
+doc	Returns the width of the game space in the player's local coordinate space.\nThe game space is defined as a spatial mapping to the visible area of the screen\nin which players interact. Intuitively, it can be thought of as encompassing the\ngraphical area of the game.\nThe dimensions of the game space is specified by the GameWidth and GameHeight\nparameters in mugen.cfg.
 
 trigger	Atan (math)
 fmt	atan(0)
@@ -875,7 +965,7 @@ doc	Returns the amount of power the player has.
 
 trigger	ProjContactTime
 fmt	ProjContactTime(0)
-doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact, made contact with the opponent and had the specified ID number, then ProjContactTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjContactTime returns -1.
+doc	This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact, made contact with the opponent and had the specified ID number, then ProjContactTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjContactTime returns -1.
 
 trigger	MoveContact
 fmt	MoveContact
@@ -903,7 +993,7 @@ doc	Returns the player's life.
 
 trigger	ProjCancelTime
 fmt	ProjCancelTime(0)
-doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact was cancelled by an opponent's projectile and had the specified ID number, then ProjCancelTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjCancelTime returns -1.
+doc	This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact was cancelled by an opponent's projectile and had the specified ID number, then ProjCancelTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjCancelTime returns -1.
 
 trigger	ID
 fmt	ID
@@ -935,7 +1025,7 @@ doc	This trigger takes an optional ID number as a suffix. If the ID number is om
 
 trigger	ProjGuardedTime
 fmt	ProjCancelTime(0)
-doc	This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact was guarded by the opponent and had the specified ID number, then ProjGuardedTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjGuardedTime returns -1.
+doc	This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact was guarded by the opponent and had the specified ID number, then ProjGuardedTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjGuardedTime returns -1.
 
 trigger	Facing
 fmt	Facing
@@ -1108,7 +1198,7 @@ req	value
 doc	Adds value to player's map.
 
 sctrl	Dialogue	ikgo
-doc	Assigns a dialogue data to be displayed either right before lifebar calls fight during first round (last frame of  RoundState = 1) or at the last active frame of the final round (RoundState = 4, right before screen starts fading out). If more than 1 player calls this sctrl, who will end up initiating dialogue is chosen randomly.\nHow the rendered dialogue will look like (positioning, default face sprites, background definition, default time between text etc.) is controlled by `[Dialogue Info]` screenpack parameters (refer to system.def distributed with engine for a working example). By default player who called the state controller will use screenpack parameters prefixed with *p1* and his *enemy(0)* will be assigned to use *p2* parameters (this is adjustable via text tokens).\nWith appropriate screenpack parameters it's possible to skip to the next *text* parameter during dialogue via button press, without ending it all together. If this screenpack group is missing, dialogue won't be initiated at all (`enabled` parameter defaults to 0).\nTokens prefixed with *pX* (where X is 1 or 2) refers to screenpack `[Dialogue Info]` parameters prefixed the same way. Some tokens accepts *redirection* argument that points to which player assets (sprite, sound, anim, state) should be used.
+doc	Assigns a dialogue data to be displayed either right before lifebar calls fight during first round (last frame of RoundState = 1) or at the last active frame of the final round (RoundState = 4, right before screen starts fading out). If more than 1 player calls this sctrl, who will end up initiating dialogue is chosen randomly.\nHow the rendered dialogue will look like (positioning, default face sprites, background definition, default time between text etc.) is controlled by `[Dialogue Info]` screenpack parameters (refer to system.def distributed with engine for a working example). By default player who called the state controller will use screenpack parameters prefixed with *p1* and his *enemy(0)* will be assigned to use *p2* parameters (this is adjustable via text tokens).\nWith appropriate screenpack parameters it's possible to skip to the next *text* parameter during dialogue via button press, without ending it all together. If this screenpack group is missing, dialogue won't be initiated at all (`enabled` parameter defaults to 0).\nTokens prefixed with *pX* (where X is 1 or 2) refers to screenpack `[Dialogue Info]` parameters prefixed the same way. Some tokens accepts *redirection* argument that points to which player assets (sprite, sound, anim, state) should be used.
 opt	hidebars
 opt	force
 req	textX
@@ -1117,20 +1207,6 @@ sctrl	TeamMapAdd	ikgo
 req	map
 req	value
 doc	Adds value to all team members maps.
-
-sctrl	HitScaleSet	ikgo
-doc	Configures the damage scales based on the parameters provided.\nHitscale effects stacks multiplicatively (being applied on each hit and the cumulative effect can be calculated by multiplying the effects together)\nIf there is a HitScale for a specific ID it takes priority over the default one.\nThe damage scale gets reset once the enemy char leaves hit state.
-opt	id
-opt	addType** `string` Specifies how **add** and **mul
-opt	add** then multiplies the damage by **mul
-opt	mul** the adds **add
-opt	min
-opt	max** `float` Maximum damage scale, takes into account both **mul
-opt	reset
-opt	force
-req	affects
-req	mul** `float` Damage multiplier. For example a **mul
-req	add
 
 sctrl	RoundTimeAdd	ikgo
 req	value

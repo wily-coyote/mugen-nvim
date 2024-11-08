@@ -1,6 +1,9 @@
 local mugen = require("mugen")
 local data = require("cmp-mugen.data").read()
 local source = {}
+
+
+
 function source:formatState(name, sctrl, ikgo)
 	local str = ""
 	local req = sctrl.req
@@ -9,20 +12,20 @@ function source:formatState(name, sctrl, ikgo)
 	opt = type(opt) == "table" and opt or {opt}
 	if ikgo then
 		str = name .. "{\n"
-			for _,v in pairs(req) do
-				str = str.."\t"..v..": ;\n"
+			for _,item in pairs(req) do
+				str = str..string.format("\t%s: %s;\n", item.name, vim.fn.join(item.value, ", "));
 			end
-			for _,v in pairs(opt) do
-				str = str.."\t# "..v..": ;\n"
+			for _,item in pairs(opt) do
+				str = str..string.format("\t# %s: %s;\n", item.name, vim.fn.join(item.value, ", "));
 			end
 		str = str.."}"
 	else
-		str = "[State "..name.."]\ntype="..name.."\ntrigger1=\n"
-			for _,v in pairs(req) do
-				str = str..v.."= \n"
+		str = string.format("[State %s]\ntype=%s\ntrigger1=\n", name, name)
+			for _,item in pairs(req) do
+				str = str..string.format("%s=%s\n", item.name, vim.fn.join(item.value, ", "));
 			end
-			for _,v in pairs(opt) do
-				str = str.."; "..v.."= \n"
+			for _,item in pairs(opt) do
+				str = str..string.format("; %s=%s\n", item.name, vim.fn.join(item.value, ", "));
 			end
 	end
 	return vim.trim(str)

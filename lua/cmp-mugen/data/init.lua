@@ -17,30 +17,30 @@ function module.read()
 		line = vim.trim(line):gsub("\\n", "\n")
 		local fields = vim.split(line, "\t")
 		if #fields >= 2 then
-			if fields[1] == "sctrl" then
+			if fields[1] == "sctrl" or fields[1] == "trigger" then
 				obj = {
 					ikgo = fields[3] == "ikgo"
 				}
-				data.sctrl[fields[2]] = obj
-			elseif fields[1] == "trigger" then
-				obj = {
-					ikgo = fields[3] == "ikgo"
-				}
-				data.trigger[fields[2]] = obj
+				data[fields[1]][fields[2]] = obj
 			else
-				-- does it already exist?
-				local check = obj[fields[1]]
-				if check then
-					-- is it a table?
-					if type(check) == "table" then
-						-- append to it
-						table.insert(check, fields[2])
+				if fields[1] == "opt" or fields[1] == "req" then
+					local item = {
+						name = fields[2],
+						value = {}
+					}
+					for k,v in pairs(fields) do
+						if k >= 3 then
+							table.insert(item.value, v)
+						end
+					end
+					if obj[fields[1]] then
+						table.insert(obj[fields[1]], item)
 					else
-						-- turn it into a table
-						obj[fields[1]] = {check}
+						obj[fields[1]] = {
+							item
+						}
 					end
 				else
-					-- it doesn't exist, add it
 					obj[fields[1]] = fields[2]
 				end
 			end

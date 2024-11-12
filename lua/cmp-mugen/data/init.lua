@@ -49,6 +49,9 @@ function module.read()
 				elseif doc then
 					doc = doc .. line .. "\n"
 				else
+					if fields[1] == "fmt" then
+						fields[2] = fields[2]:gsub("%$", "")
+					end
 					obj[fields[1]] = fields[2]
 				end
 			end

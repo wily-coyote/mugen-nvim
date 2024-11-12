@@ -312,7 +312,7 @@ opt	freq	0	0.0	0.0	0.0
 opt	ampl	0	0.0	0.0	0.0
 opt	self	0
 docbgn
-Creates force feedback for supported force feedback devices. This controller is not implemented in MUGEN 1.0.
+Creates force feedback for supported force feedback devices.This controller is not implemented in MUGEN 1.0.
 Parameters to the ForceFeedback controller may not be specified using arithmetic expressions. It is an exception in this regard.
 docend
 
@@ -1031,63 +1031,27 @@ yellow. Where they overlap, the overlapping region is displayed in
 bright yellow.
 docend
 
-trigger	P2BodyDist
-fmt	P2BodyDist
+trigger	Abs
+fmt	abs($exprn)
 docbgn
-Returns the distance of P2 from P1, where P1 is the player, and P2 is his opponent. P2BodyDist is useful in the CMD for cases where P1 has an attack that is different when performed close to P2.
+Computes the absolute value of its argument.
+Returns bottom if exprn evaluates to bottom.
 docend
 
-trigger	HitCount
-fmt	HitCount
+trigger	Acos
+fmt	acos($exprn)
 docbgn
-Returns the number times the player's current attack move has hit one or more opponents. This value is valid only for a single state; after any state change, it resets to 0. To prevent it from resetting to 0, set hitcountpersist in the StateDef (see cns documentation for details). The HitCount and UniqHitCount triggers differ only when the player is hitting more than one opponent. In the case where the player is hitting two opponents with the same attack, HitCount will increase by 1 for every hit, while UniqHitCount increases by 2.
-docend
-
-trigger	AnimExist
-fmt	AnimExist(0)
-docbgn
-Returns 1 if the specified animation action exists for the player.
-The result of this trigger is undefined if the player has been placed in a custom state by a successful hit. In this situation, use SelfAnimExist.
-docend
-
-trigger	Random
-fmt	Random
-docbgn
-Returns a random number between 0 and 999, inclusive.
-docend
-
-trigger	MoveHit
-fmt	MoveHit
-docbgn
-This trigger is valid only when the player is in an attack state.
-MoveHit gives a non-zero value if P2 has been hit by P1's attack. It gives 0 otherwise.
-Typically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
-docend
-
-trigger	HitOver
-fmt	HitOver
-docbgn
-If the player is in a gethit state, returns 1 when the hittime has expired, and 0 otherwise. For an explanation of hittime, see the HitDef documentation.
-docend
-
-trigger	Ctrl
-fmt	Ctrl
-docbgn
-Returns the control flag of p1.
-docend
-
-trigger	HitVel
-fmt	HitVel
-docbgn
-Gets the value of the velocity imparted to the player by a hit.
-You must specify the component that you want to check, eg.
-"HitVel Y" to check the vertical velocity component.
+Computes the arccosine (in radians) of the specified argument.
+Returns bottom if exprn evaluates to bottom, or if exprn is not in
+the domain of arccosine (which is [-1.0,1.0]).
 docend
 
 trigger	AILevel
 fmt	AILevel
 docbgn
 Returns the difficulty level of the player's AI.
+If AI is enabled on the player, the value ranges from 1 (easiest) to 8 (most difficult).
+If AI is not enabled on the player, the return value is 0.
 docend
 
 trigger	Alive
@@ -1096,98 +1060,64 @@ docbgn
 Returns 1 if the player is still able to fight, 0 if the player has been KOed.
 docend
 
-trigger	GameHeight
-fmt	GameHeight
+trigger	Anim
+fmt	Anim
 docbgn
-Returns the height of the game space in the player's local coordinate space.
-The game space is defined as a spatial mapping to the visible area of the screen
-in which players interact. Intuitively, it can be thought of as encompassing the
-graphical area of the game.
-The dimensions of the game space is specified by the GameWidth and GameHeight
-parameters in mugen.cfg.
+Returns the current animation action number of the player.
 docend
 
-trigger	CanRecover
-fmt	CanRecover
+trigger	AnimElem
+fmt	AnimElem = $value1, = $value2
 docbgn
-If the player is currently in a falling state, returns 1 if he is currently able to recover, and 0 if he is not currently able to recover. If the player is not currently falling, the output of this trigger is undefined.
-docend
+Gets the animation-time elapsed since the start of a specified element of the current animation action. Useful for synchronizing events to elements of an animation action.
+(reminder: first element of an action is element 1, not 0)
+AnimElemTime has similar functionality to AnimElem, but can take expressions as its argument.
+Returns bottom if the specified element number is invalid for this
+action (e.g., it's too large or too small).
+Trigger in Format 1 is true if the player's animation is
+at the start of the element number specified by value1.
+In other words, if value1 is equal to n, it is true on the
+first game-tick of the nth element of the animation.
+Trigger in Format 2 compares the player's animation-time
+to t+value2, where t is time of the start of the element
+number specified by value1.
 
-trigger	BackEdgeDist
-fmt	BackEdgeDist
-docbgn
-BackEdgeDist gives the distance between the x-axis of the player and the edge of the screen behind of the player.
-docend
-
-trigger	ProjHit(*,***)
-fmt	ProjHit0 = 0
-docbgn
-This trigger takes an optional positive ID number as a suffix. If the ID number is omitted, ProjHit returns true if any of the player's projectiles successfully hit the opponent. When the ID number is specified, ProjHit returns true only if one of the player's projectiles with the specified ID number successfully hit the opponent.
-docend
-
-trigger	NumPartner
-fmt	NumPartner
-docbgn
-NumPartner returns the number of partners that exist. Neutral players and normal helpers are not considered partners.
-docend
-
-trigger	ProjHitTime
-fmt	ProjHitTime(0)
-docbgn
-This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact successfully hit the opponent and had the specified ID number, then ProjHit returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked.
-If no projectile meets all the above conditions, then ProjHitTime returns -1.
-docend
-
-trigger	Const480p
-fmt	Const480p(0)
-docbgn
-Converts a value from the 480p coordinate space to the player's coordinate space.
-The conversion ratio between coordinate spaces is the ratio of their widths.
-docend
-
-trigger	Command(*,***)
-fmt	Command = ""
-docbgn
-Triggers if the user has input the specified command.
-docend
-
-trigger	GameWidth
-fmt	GameHeight
-docbgn
-Returns the width of the game space in the player's local coordinate space.
-The game space is defined as a spatial mapping to the visible area of the screen
-in which players interact. Intuitively, it can be thought of as encompassing the
-graphical area of the game.
-The dimensions of the game space is specified by the GameWidth and GameHeight
-parameters in mugen.cfg.
-docend
-
-trigger	Atan (math)
-fmt	atan(0)
-docbgn
-Computes the arctangent (in radians) of the specified argument.
-docend
-
-trigger	Const240p
-fmt	Const240p(0)
-docbgn
-Converts a value from the 240p coordinate space to the player's coordinate space.
-The conversion ratio between coordinate spaces is the ratio of their widths.
+AnimElem will not trigger on the first game-tick of the second or
+later loop of an animation with a finite looptime. For example,
+"AnimElem = 1" will trigger the first tick a player changes to an
+animation, but will not trigger on the tick that it loops. You may
+get it to trigger each time using "AnimElem = 1 || AnimTime = 0".
 docend
 
 trigger	AnimElemNo
-fmt	AnimElemNo(0)
+fmt	AnimElemNo($exprn)
 docbgn
 Returns the number of the animation element in the current action
 that would be displayed at the specified time. The argument to AnimElemNo represents the time to check, expressed in game ticks, relative to the present.
+Returns bottom if you try to check a time that would fall before the
+start of the current action.
+If the action is currently within its looping portion, then it is
+assumed to have been looping forever. That is, no matter how far into
+the past you check, AnimElemNo will always return an element number
+that lies within the looping portion of the action.
 docend
 
-trigger	MoveGuarded
-fmt	MoveGuarded
+trigger	AnimElemTime
+fmt	AnimElemTime($exprn)
 docbgn
-This trigger is valid only when the player is in an attack state.
-MoveGuarded gives a non-zero value if P2 is guarding, or has guarded, P1's attack. It gives 0 otherwise. P1 is the player, and P2 is his opponent.
-Typically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+Gets the animation-time elapsed since the start of a specified element of the current animation action. Useful for synchronizing events to elements of an animation action.
+(reminder: first element of an action is element 1, not 0)
+Returns bottom if exprn evaluates to bottom, or if exprn evaluates
+to an element number that is not valid for the current action.
+AnimElemTime will not trigger on the first game-tick of the second or later loop of an animation with a finite looptime. For example, "AnimElemTime(1) = 0" will trigger the first tick a player changes to an animation, but will not trigger on the tick that it loops. You may get it to trigger each time using "AnimElemTime(1) = 0 || AnimTime = 0".
+docend
+
+trigger	AnimExist
+fmt	AnimExist($exprn)
+docbgn
+Returns 1 if the specified animation action exists for the player.
+The result of this trigger is undefined if the player has been placed in a custom state by a successful hit. In this situation, use SelfAnimExist.
+Returns bottom if exprn evaluates to bottom.
 docend
 
 trigger	AnimTime
@@ -1197,255 +1127,32 @@ Gives the difference between the looptime of the current animation action and th
 The name may be confusing. Try to think of it as "time from the end of the animation". During the animation, AnimTime will always return a non-positive number.
 docend
 
-trigger	Anim
-fmt	Anim
-docbgn
-Returns the current animation action number of the player.
-docend
-
-trigger	Vel
-fmt	Vel
-docbgn
-Gets the value of the player's velocity. You must specify the component that you want to check, eg. "Vel Y" to check the Y-velocity.
-docend
-
-trigger	Cond (math)
-fmt	Cond("","","")
-docbgn
-This trigger takes three arguments. The first argument is a condition argument.
-If the condition is true (i.e., nonzero), Cond evaluates and returns the second
-argument. If the condition is false, Cond evaluates and returns the third
-argument. If the condition is bottom, then Cond returns bottom without
-evaluating the second or third arguments. In all cases, any unused argument(s) are not evaluated. Therefore, Cond can be
-used instead of IfElse to avoid any side effects that would be caused by
-evaluating the unused argument (e.g., variable assignment, or performing a
-computation that would cause bottom to be generated).
-docend
-
-trigger	IfElse (math)
-fmt	IfElse("","","")
-docbgn
-This trigger takes three arguments. If the first is nonzero, IfElse returns the
-value of the second argument. Else, it returns the value of the third argument.
-All arguments are evaluated prior to execution of IfElse. In particular, any
-side effects caused by evaluation of the arguments (such as variable
-assignment, or performing a computation that generates a warning) will occur.
-If you wish to avoid these side effects, then use Cond.
-docend
-
-trigger	HitPauseTime
-fmt	HitPauseTime
-docbgn
-Returns the time until the player's hitpause expires. The player enters a hitpause when his attack comes in contact with an opponent. The initial hitpause time is equal to the first value of the pausetime parameter in the player's HitDef. If ignorehitpause is not set, this will always return 0.
-docend
-
-trigger	PalNo
-fmt	PalNo
-docbgn
-Returns the palette number of the player (i.e., the color scheme chosen for the character during character select.)
-docend
-
-trigger	InGuardDist
-fmt	InGuardDist
-docbgn
-Returns 1 if the player is within guarding distance of an opponent's physical or projectile attack. The guarding distance is the value of the guard.dist parameter of the opponent's HitDef. Returns 0 if out of guard distance, or the opponent is not attacking.
-docend
-
-trigger	Var
-fmt	Var(0)
-docbgn
-This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified int variable.
-docend
-
-trigger	TicksPerSecond
-fmt	TicksPerSecond
-docbgn
-Returns the number of ticks per second. Useful for time calculations.
-docend
-
-trigger	AnimElem(*,***)
-fmt	AnimElem = 0
-docbgn
-Gets the animation-time elapsed since the start of a specified element of the current animation action. Useful for synchronizing events to elements of an animation action.
-(reminder: first element of an action is element 1, not 0) AnimElemTime has similar functionality to AnimElem, but can take expressions as its argument.
-docend
-
-trigger	TimeMod(*,**,***)
-fmt	TimeMod = 0, 0
-docbgn
-Returns the remainder when the state-time of the player is divided by the specified value. The % operator subsumes the functionality of TimeMod, so it is recommended that you use % instead.
-docend
-
-trigger	TeamMode(*,***)
-fmt	TeamMode = ""
-docbgn
-TeamMode gives the current mode of play for the player's team.
-docend
-
-trigger	Acos (math)
-fmt	acos(0)
-docbgn
-Computes the arccosine (in radians) of the specified argument.
-docend
-
-trigger	NumProj
-fmt	NumProj
-docbgn
-Returns the total number of projectiles currently owned by the player.
-docend
-
-trigger	Name(*,***)
-fmt	Name = ""
-docbgn
-Returns the player's name (the internal name specified in the .DEF file, which may not be the same as the displayed name).
-docend
-
-trigger	Floor (math)
-fmt	floor(0)
-docbgn
-Implements the floor function. Returns the greatest integer less than or equal to its argument.
-docend
-
-trigger	Lose
-fmt	Lose
-docbgn
-Returns 1 if the player (or the player's team, in team mode) has lost the round, 0 otherwise. Can be suffixed with "KO" or "Time" to return 1 only when the round has been lost by a KO or by time expiring, respectively.
-docend
-
-trigger	Time
-fmt	Time
-docbgn
-Returns the state-time of the player (that is, the number of ticks that the player has been in the current state so far).
-docend
-
-trigger	UniqHitCount
-fmt	UniqHitCount
-docbgn
-Returns the total number of hits the player's current attack move has done. This value is valid only for a single state; after any state change, it resets to 0. To prevent it from resetting to 0, set hitcountpersist in the StateDef (see cns documentation for details). The HitCount and UniqHitCount triggers differ only when the player is hitting more than one opponent. In the case where the player is hitting two opponents with the same attack, HitCount will increase by 1 for every hit, while UniqHitCount increases by 2.
-docend
-
-trigger	FrontEdgeBodyDist
-fmt	FrontEdgeBodyDist
-docbgn
-FrontEdgeBodyDist gives the distance between the front of the player (as determined by the front edge of his width bar) and the edge of the screen.
-docend
-
-trigger	Asin (math)
-fmt	asin(0)
+trigger	Asin
+fmt	asin($exprn)
 docbgn
 Computes the arcsine (in radians) of the specified argument.
+Returns bottom if exprn evaluates to bottom, or if exprn is not in
+the domain of arcsine (which is [-1.0,1.0]).
 docend
 
-trigger	StageVar(*,***)
-fmt	StageVar("") = ""
+trigger	Atan
+fmt	atan($exprn)
 docbgn
-Returns information about the stage.
-A limited number of parameters are supported.
+Computes the arctangent (in radians) of the specified argument.
+Returns bottom if exprn evaluates to bottom.
 docend
 
-trigger	NumProjID
-fmt	NumProjID(0)
+trigger	AuthorName
+fmt	AuthorName = "$name"
 docbgn
-This trigger takes an ID number as a required argument. It returns the number of projectiles currently owned by the player and having the specified ID number.
+Returns the player's author's name (specified in the .DEF file). This may also be useful for telling apart characters with the same name but different authors.
 docend
 
-trigger	TeamSide
-fmt	TeamSide
+trigger	BackEdge
+fmt	BackEdge
 docbgn
-Returns the team side the player is on. 1 represents P1 side (left), 2 for P2 side (right).
-docend
-
-trigger	Const(*)
-fmt	Const("")
-docbgn
-Returns the value of one of the player's constants. Error conditions:
-none
-docend
-
-trigger	AnimElemTime
-fmt	AnimElemTime(0)
-docbgn
-Gets the animation-time elapsed since the start of a specified element of the current animation action. Useful for synchronizing events to elements of an animation action.
-(reminder: first element of an action is element 1, not 0)
-docend
-
-trigger	NumEnemy
-fmt	NumEnemy
-docbgn
-NumEnemy returns the number of opponents that exist. Neutral players and normal helpers are not considered opponents.
-docend
-
-trigger	SysVar
-fmt	Var(0)
-docbgn
-This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified system int variable.
-This trigger is NOT to be used under normal circumstances. System
-variables are reserved for bookkeeping in common1.cns.
-docend
-
-trigger	HitDefAttr(*,***)
-fmt	HitDefAttr = 0, 0
-docbgn
-Checks the attribute parameter of the player's currently-active HitDef.
-If the player is not currently attacking, then no parameters will match.
-Can be used for simple move-interrupts from weaker to stronger attacks in the CMD file. HitDefAttr != value1, value2 is logically equivalent to
-!(HitDefAttr = value1, value2).
-docend
-
-trigger	StateType
-fmt	StateType = ""
-docbgn
-StateType gives the player's state-type. Refer to the section
-on StateDef in the CNS documentation for more details on StateType.
-Useful for "move interrupts" in the CMD file.
-docend
-
-trigger	PlayerIDExist
-fmt	PlayerIDExist(0)
-docbgn
-Returns 1 if a player with the specified ID number exists, 0 otherwise. This ID number is obtained using the "ID" trigger (see ID). Do not confuse PlayerID with TargetID.
-docend
-
-trigger	HitShakeOver
-fmt	HitShakeOver
-docbgn
-If the player is in a gethit state, returns 1 if the hit shake (the period when he is shaking in place) has ended, and 0 otherwise.
-docend
-
-trigger	Sin (math)
-fmt	sin(0)
-docbgn
-Computes the sine of the specified argument (in radians.)
-docend
-
-trigger	PowerMax
-fmt	PowerMax
-docbgn
-Returns the maximum amount of power the player can have. This is normally 3000 (level 3).
-docend
-
-trigger	Ceil (math)
-fmt	ceil(0)
-docbgn
-Implements the "ceiling" function. Returns the least integer which is greater than or equal to the specified argument.
-docend
-
-trigger	Cos (math)
-fmt	cos(0)
-docbgn
-Computes the cosine of the specified argument (in radians.)
-docend
-
-trigger	RoundState
-fmt	RoundState
-docbgn
-Returns the current round state number.
-docend
-
-trigger	GetHitVar(*)
-fmt	GetHitVar("")
-docbgn
-When the player is in a gethit state, returns the value of the specified hit parameter.
+BackEdge returns the x position of the edge of the screen that is behind the player, in absolute stage coordinates.
+This trigger is equivalent to the expression "ifelse(facing = 1, LeftEdge, RightEdge)".
 docend
 
 trigger	BackEdgeBodyDist
@@ -1454,159 +1161,123 @@ docbgn
 BackEdgeBodyDist gives the distance from the back of the player, as determined by the end of his width bar, to the back edge of the screen.
 docend
 
-trigger	MoveType(*,***)
-fmt	MoveType = ""
+trigger	BackEdgeDist
+fmt	BackEdgeDist
 docbgn
-MoveType gives the player's move-type. Refer to the section
-on StateDef in the CNS documentation for more details on MoveType.
-Useful for "move interrupts" in the CMD file.
+BackEdgeDist gives the distance between the x-axis of the player and the edge of the screen behind of the player.
 docend
 
-trigger	Pi (math)
-fmt	pi
+trigger	BottomEdge
+fmt	BottomEdge
 docbgn
-This trigger returns the numeric value of pi (3.141593...)
+BottomEdge returns the y position of the bottom edge of the screen, in absolute stage coordinates.
+This trigger is equivalent to the expression "Pos Y - ScreenPos Y + GameHeight".
 docend
 
-trigger	IsHelper
-fmt	IsHelper
+trigger	CameraPos
+fmt	CameraPos $X
 docbgn
-This trigger takes an optional ID number as an argument. If the ID number is omitted, IsHelper returns 1 if the player is a helper character, and 0 otherwise. If the ID number is included, then IsHelper returns 1 if the player is a helper character with the specified ID number, and 0 otherwise.
+Gets the value of the camera's position relative to the stage.
+The home position of the camera is 0, 0.
+The value of "CameraPos X" increases as the camera moves to the right.
+The value of "CameraPos Y" decreases as the camera moves upwards.
+The units of the position returned is in the coordspace of the player.
 docend
 
-trigger	RoundNo
-fmt	RoundNo
+trigger	CameraZoom
+fmt	CameraZoom
 docbgn
-Returns the current round number.
+Gets the value of the camera's zoom factor.
+The zoom factor de
 docend
 
-trigger	RootDist
-fmt	RootDist
+trigger	CanRecover
+fmt	CanRecover
 docbgn
-This trigger is only valid for helper-type characters.
-RootDist returns the distance from the helper to its root. The root is the main player character who owns the helper: for instance, if you select Kumquat to play with, and Kumquat spawns a helper named Kiwi, who in turn spawns a helper named Penguin, then Penguin's root is Kumquat, and Penguin is a descendant of Kumquat. RootDist works similarly to P2Dist.
+If the player is currently in a falling state, returns 1 if he is currently able to recover, and 0 if he is not currently able to recover. If the player is not currently falling, the output of this trigger is undefined.
 docend
 
-trigger	MatchNo
-fmt	MatchNo
+trigger	Ceil
+fmt	ceil($exprn)
 docbgn
-Returns the current match number.
+Implements the "ceiling" function. Returns the least integer which is greater than or equal to the specified argument.
+Returns bottom if exprn evaluates to bottom.
 docend
 
-trigger	Pos
-fmt	Pos
+trigger	Command
+fmt	Command = "$command_name"
 docbgn
-Gets the value of the player's position. You must specify the component that you want to check, eg. "Pos Y" to check the Y-position.
+Triggers if the user has input the specified command.
 docend
 
-trigger	Power
-fmt	Power
+trigger	Cond
+fmt	Cond($exp_cond,$exp_true,$exp_false)
 docbgn
-Returns the amount of power the player has.
+This trigger takes three arguments. The first argument is a condition argument.
+If the condition is true (i.e., nonzero), Cond evaluates and returns the second
+argument. If the condition is false, Cond evaluates and returns the third
+argument. If the condition is bottom, then Cond returns bottom without
+evaluating the second or third arguments.
+In all cases, any unused argument(s) are not evaluated. Therefore, Cond can be
+used instead of IfElse to avoid any side effects that would be caused by
+evaluating the unused argument (e.g., variable assignment, or performing a
+computation that would cause bottom to be generated).
+Returns bottom if exp_cond evaluates to bottom, or if exp_true or exp_false
+(whichever is actually used) evaluates to bottom.
 docend
 
-trigger	ProjContactTime
-fmt	ProjContactTime(0)
+trigger	Const
+fmt	Const($param_name)
 docbgn
-This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact, made contact with the opponent and had the specified ID number, then ProjContactTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjContactTime returns -1.
+Returns the value of one of the player's constants.
+Error conditions:
+none
 docend
 
-trigger	MoveContact
-fmt	MoveContact
+trigger	Const240p
+fmt	Const240p($exprn)
 docbgn
-This trigger is valid only when the player is in an attack state.
-MoveContact gives a non-zero value if P2 has either been hit, or has guarded P1's attack. It gives 0 otherwise. P1 is the player, and P2 is his opponent.
-Typically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+Converts a value from the 240p coordinate space to the player's coordinate space.
+The conversion ratio between coordinate spaces is the ratio of their widths.
+Returns bottom if exprn evaluates to bottom.
+Non-zero position and velocity offset values in common1.cns should use one of
+the Const triggers to maintain consistency with characters from a different
+coordinate space.
 docend
 
-trigger	IsHomeTeam
-fmt	IsHomeTeam
+trigger	Const480p
+fmt	Const480p($exprn)
 docbgn
-Returns 1 if the player's team is considered the "home team". In arcade modes, the computer is always considered the home team. In versus modes, P1's side (left) is the home team.
+Converts a value from the 480p coordinate space to the player's coordinate space.
+The conversion ratio between coordinate spaces is the ratio of their widths.
+Returns bottom if exprn evaluates to bottom.
+Non-zero position and velocity offset values in common1.cns should use one of
+the Const triggers to maintain consistency with characters from a different
+coordinate space.
 docend
 
-trigger	AuthorName(*,***)
-fmt	AuthorName = ""
+trigger	Const720p
+fmt	Const720p($exprn)
 docbgn
-Returns the player's author's name (specified in the .DEF file). This may also be useful for telling apart characters with the same name but different authors.
+Converts a value from the 720p coordinate space to the player's coordinate space.
+The conversion ratio between coordinate spaces is the ratio of their widths.
+Returns bottom if exprn evaluates to bottom.
+Non-zero position and velocity offset values in common1.cns should use one of
+the Const triggers to maintain consistency with characters from a different
+coordinate space.
 docend
 
-trigger	ProjContact(*,***)
-fmt	ProjContact0 = 0
+trigger	Cos
+fmt	cos($exprn)
 docbgn
-This trigger takes an optional ID number as a suffix. If the ID number is omitted, ProjContact returns true if any of the player's projectiles either successfully hit the opponent or were guarded by the opponent. When the ID number is specified, ProjContact returns true only if any of the player's projectiles with the specified ID number either successfully hit the opponent or was guarded.
+Computes the cosine of the specified argument (in radians.)
+Returns bottom if exprn evaluates to bottom.
 docend
 
-trigger	Ln (math)
-fmt	ln(0)
+trigger	Ctrl
+fmt	Ctrl
 docbgn
-Returns the natural logarithm of its argument. This produces slightly more accurate results than the otherwise equivalent expression log(e,(argument)).
-docend
-
-trigger	Life
-fmt	Life
-docbgn
-Returns the player's life.
-docend
-
-trigger	ProjCancelTime
-fmt	ProjCancelTime(0)
-docbgn
-This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact was cancelled by an opponent's projectile and had the specified ID number, then ProjCancelTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjCancelTime returns -1.
-docend
-
-trigger	ID
-fmt	ID
-docbgn
-Returns the ID number of the player. The ID number is unique for every player throughout the course of a match. Any helper that is created during this time will also receive its own unique ID number. This trigger may be useful for getting opponents' ID numbers, to be later used with the "playerID" redirection keyword (see exp docs). Do not confuse playerID with targetID.
-docend
-
-trigger	GameTime
-fmt	GameTime
-docbgn
-Returns the total number of ticks that have elapsed in the game so far.
-docend
-
-trigger	Abs (math)
-fmt	abs(0)
-docbgn
-Computes the absolute value of its argument.
-docend
-
-trigger	PrevStateNo
-fmt	StateNo
-docbgn
-Returns the number of the state that the player was last in. The results of this trigger are not guaranteed to be accurate.
-docend
-
-trigger	StateNo
-fmt	StateNo
-docbgn
-Returns the player's current state number. Useful for "move interrupts" in the CMD file.
-docend
-
-trigger	NumExplod
-fmt	NumExplod
-docbgn
-This trigger takes an ID number as an optional argument. If the ID number is omitted, NumExplod returns the number of explods owned by the player. If the ID number is included, then NumExplod returns the number of explods with that ID number that are owned by the player. The ID number must be greater than -1. An ID number of -1 or less will give the same behavior as if the ID number is omitted.
-docend
-
-trigger	ProjGuarded(*,***)
-fmt	ProjGuarded0 = 0
-docbgn
-This trigger takes an optional ID number as a suffix. If the ID number is omitted, ProjGuarded returns true if any of the player's projectiles were guarded by the opponent. When the ID number is specified, ProjGuarded returns true only if one of the player's projectiles with the specified ID number was guarded by the opponent.
-docend
-
-trigger	ProjGuardedTime
-fmt	ProjCancelTime(0)
-docbgn
-This trigger takes an required nonnegative ID number as an argument. If the player's last projectile to make any kind of contact was guarded by the opponent and had the specified ID number, then ProjGuardedTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjGuardedTime returns -1.
-docend
-
-trigger	Facing
-fmt	Facing
-docbgn
-Returns 1 if the player is facing to the right, and -1 if the player is facing to the left.
+Returns the control flag of p1.
 docend
 
 trigger	DrawGame
@@ -1615,108 +1286,45 @@ docbgn
 Returns 1 if the player (or the player's team, in team mode) has ended the round in a draw, 0 otherwise.
 docend
 
-trigger	E (math)
+trigger	E
 fmt	e
 docbgn
 Returns the value of e (2.718281828...)
 docend
 
-trigger	RoundsExisted
-fmt	RoundsExisted
-docbgn
-Returns the number of rounds the player has existed for. On the first round, returns 0. This is useful for a Turns mode intro.
-docend
-
-trigger	FVar
-fmt	FVar(0)
-docbgn
-This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified float variable.
-docend
-
-trigger	Exp (math)
-fmt	exp(0)
+trigger	Exp
+fmt	exp($exprn)
 docbgn
 Computes the exponential of the argument (e raised to the power of
 the argument.) This produces slightly more accurate results than the
 equivalent expression e**(argument).
+Returns bottom if exprn evaluates to bottom.
 docend
 
-trigger	ParentDist
-fmt	ParentDist
+trigger	Facing
+fmt	Facing
 docbgn
-This trigger is only valid for helper-type characters.
-ParentDist returns the distance from the helper to its parent. It works similarly to P2Dist.
+Returns 1 if the player is facing to the right, and -1 if the player is facing to the left.
 docend
 
-trigger	Const720p
-fmt	Const720p(0)
+trigger	Floor
+fmt	floor($exprn)
 docbgn
-Converts a value from the 720p coordinate space to the player's coordinate space.
-The conversion ratio between coordinate spaces is the ratio of their widths.
+Implements the floor function. Returns the greatest integer less than or equal to its argument.
+Returns bottom if exprn evaluates to bottom.
 docend
 
-trigger	P2Dist
-fmt	P2Dist
+trigger	FrontEdge
+fmt	FrontEdge
 docbgn
-Returns the distance of P2 from P1, where P1 is the player, and P2 is his opponent.
+FrontEdge returns the x position of the edge of the screen that is in front the player, in absolute stage coordinates.
+This trigger is equivalent to the expression "ifelse(facing = 1, RightEdge, LeftEdge)".
 docend
 
-trigger	Tan (math)
-fmt	tan(0)
+trigger	FrontEdgeBodyDist
+fmt	FrontEdgeBodyDist
 docbgn
-Computes the tangent of the specified argument (in radians.)
-docend
-
-trigger	NumHelper
-fmt	NumHelper
-docbgn
-This trigger takes an ID number as an optional argument. If the ID number is omitted, then NumHelper returns the total number of helpers currently owned by the player. If the ID number is included, then NumHelper returns the total number of helpers with that ID number owned by the player. The ID number must be greater than 0. If the ID
-number is 0 or less, then all helpers are counted.
-docend
-
-trigger	NumTarget
-fmt	NumTarget
-docbgn
-This trigger takes an ID number as an optional argument. If the ID number is omitted, NumTarget returns the current number of targets for the player. If the ID number is included, then NumTarget returns the number of targets for the player which have that target ID number. The ID number must be greater than -1. An ID number of -1 or less will give the same behavior as if the ID number is omitted.
-docend
-
-trigger	MatchOver
-fmt	MatchOver
-docbgn
-Returns 1 if the match has ended. (For example, in the case of a best-of-three match, this will return true when one of the players or teams has won two rounds.)
-docend
-
-trigger	MoveReversed
-fmt	MoveReversed
-docbgn
-This trigger is valid only when the player is in an attack state.
-MoveReversed gives a non-zero value if P1's attack has been reversed by P2. It gives 0 otherwise.
-docend
-
-trigger	LifeMax
-fmt	LifeMax
-docbgn
-Returns the maximum amount of life the player can have. This is normally the value of the "life" parameter in the [Data] group of the player variables, but may be different in situations such as team modes.
-docend
-
-trigger	Log (math)
-fmt	Log("","")
-docbgn
-Takes two arguments a and b, and returns the base-a logarithm of b.
-docend
-
-trigger	HitFall
-fmt	HitFall
-docbgn
-If the player is currently in a gethit state, returns the fall flag of the hit. The output of this trigger is undefined if the player is not in a gethit state. For an explanation of the fall flag, see the HitDef documentation.
-docend
-
-trigger	SysFVar
-fmt	FVar(0)
-docbgn
-This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified system float variable.
-This trigger should NOT be used under normal circumstances. System
-variables are reserved for bookkeeping in common1.cns.
+FrontEdgeBodyDist gives the distance between the front of the player (as determined by the front edge of his width bar) and the edge of the screen.
 docend
 
 trigger	FrontEdgeDist
@@ -1725,10 +1333,818 @@ docbgn
 FrontEdgeDist gives the distance between the x-axis of the player and the edge of the screen in front of the player.
 docend
 
-trigger	ScreenPos
-fmt	Pos
+trigger	FVar
+fmt	FVar($exprn)
 docbgn
-Gets the value of the player's absolute (screen-relative) position. You must specify the component that you want to check, eg. "Pos Y" to check the Y-position.
+This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified float variable.
+Returns bottom if exprn evaluates to bottom, or if exprn evaluates
+to an invalid variable index.
+docend
+
+trigger	GameHeight
+fmt	GameHeight
+docbgn
+Returns the current height of the game space in the player's local coordinate space.
+The game space is defined as the currently-visible area of the stage in which players interact.
+The dimensions of the game space at a zoom factor of 1.0 is specified by the
+GameWidth and GameHeight parameters in mugen.cfg.
+GameWidth and GameHeight scale inversely with the zoom factor of the camera.
+For example, if the camera zoom factor is 0.5, the values returned by GameWidth
+and GameHeight will be double that of at zoom factor 1.
+ScreenWidth and ScreenHeight are the equivalent triggers that are not
+affected by the camera zoom factor.
+docend
+
+trigger	GameTime
+fmt	GameTime
+docbgn
+Returns the total number of ticks that have elapsed in the game so far.
+docend
+
+trigger	GameWidth
+fmt	GameHeight
+docbgn
+Returns the current width of the game space in the player's local coordinate space.
+The game space is defined as the currently-visible area of the stage in which players interact.
+The dimensions of the game space at a zoom factor of 1.0 is specified by the
+GameWidth and GameHeight parameters in mugen.cfg.
+GameWidth and GameHeight scale inversely with the zoom factor of the camera.
+For example, if the camera zoom factor is 0.5, the values returned by GameWidth
+and GameHeight will be double that of at zoom factor 1.
+ScreenWidth and ScreenHeight are the equivalent triggers that are not
+affected by the camera zoom factor.
+docend
+
+trigger	GetHitVar
+fmt	GetHitVar($param_name)
+docbgn
+When the player is in a gethit state, returns the value of the specified hit parameter.
+
+xveladd: Returns the additional x-velocity that is added to the
+player's own when he is KOed. (float)
+yveladd: Returns the additional y-velocity that is added to the
+player's own when he is KOed. (float)
+type: Returns the type of the hit: 0 for none, 1 for high, 2 for
+low, 3 for trip (ground only).
+animtype: Returns the animation type of the hit. (0 for light, 1 for
+medium, 2 for hard, 3 for back, 4 for up, 5 for diag-up)
+airtype: Returns the type specified in the HitDef for an air hit.
+groundtype: Returns the type specified in the HitDef for a ground
+hit.
+damage: Returns the damage given by the hit. (int)
+hitcount: Returns the number of hits taken by the player in current
+combo. (int)
+fallcount: Returns the number of times player has hit the ground in
+the current combo. (int)
+hitshaketime: Returns time player is "frozen" during the hit. This
+number counts down by 1 for each game tick, and stops
+when it reaches zero. (int)
+hittime: Returns time before player regains control and returns to
+an idle state after being hit.
+This counts down by 1 per game tick, as long as hitshaketime
+(see above) is greater than 0. It stops counting down when
+the value reaches -1. (int)
+"GetHitVar(hittime) < 0" is equivalent to the HitOver
+trigger.
+slidetime: Returns time that player slides backwards (on the ground)
+after the hit. (int)
+ctrltime: Returns time before player regains control after guarding
+the hit. (int)
+recovertime: Returns time before player gets up from liedown state
+This number counts down to 0 for each game tick, and
+will count down faster if buttons are hit. (int)
+xoff: "Snap" x offset when hit (deprecated)
+yoff: "Snap" y offset when hit (deprecated)
+xvel: Fixed x-velocity imparted by hit. (float)
+yvel: Fixed y-velocity imparted by hit. (float)
+yaccel: y acceleration set by the hit. (float)
+chainid: Player-assigned chainID for last hit taken. (int)
+guarded: True if the last hit was guarded, false otherwise.
+isbound: True if the player is the subject of an attacker's
+TargetBind controller. Useful to prevent being stuck in
+thrown states. (int)
+fall: True if falling, false otherwise (int)
+fall.damage: Damage taken upon fall (int)
+fall.xvel: x velocity after bouncing off ground (float)
+fall.yvel: y velocity after bouncing off ground (float)
+fall.recover: True if player can recover, false otherwise.
+fall.recovertime: time before player can recover. (int)
+fall.kill: value of fall.kill parameter in attacker's hitdef. (int)
+fall.envshake.time: See below. (int)
+fall.envshake.freq: See below. (float)
+fall.envshake.ampl: See below. (int)
+fall.envshake.phase: Returns values set by the fall.envshake.*
+parameters in an attacker's hitdef. (float)
+docend
+
+trigger	HitCount
+fmt	HitCount
+docbgn
+Returns the number times the player's current attack move has hit one or more opponents. This value is valid only for a single state; after any state change, it resets to 0. To prevent it from resetting to 0, set hitcountpersist in the StateDef (see cns documentation for details). The HitCount and UniqHitCount triggers differ only when the player is hitting more than one opponent. In the case where the player is hitting two opponents with the same attack, HitCount will increase by 1 for every hit, while UniqHitCount increases by 2.
+docend
+
+trigger	HitDefAttr
+docbgn
+Checks the attribute parameter of the player's currently-active HitDef.
+If the player is not currently attacking, then no parameters will match.
+Can be used for simple move-interrupts from weaker to stronger attacks in the CMD file.
+Note:HitDefAttr != value1, value2is logically equivalent to!(HitDefAttr = value1, value2).
+docend
+
+trigger	HitFall
+fmt	HitFall
+docbgn
+If the player is currently in a gethit state, returns the fall flag of the hit. The output of this trigger is undefined if the player is not in a gethit state. For an explanation of the fall flag, see the HitDef documentation.
+docend
+
+trigger	HitOver
+fmt	HitOver
+docbgn
+If the player is in a gethit state, returns 1 when the hittime has expired, and 0 otherwise. For an explanation of hittime, see the HitDef documentation.
+docend
+
+trigger	HitPauseTime
+fmt	HitPauseTime
+docbgn
+Returns the time until the player's hitpause expires. The player enters a hitpause when his attack comes in contact with an opponent. The initial hitpause time is equal to the first value of the pausetime parameter in the player's HitDef. If ignorehitpause is not set, this will always return 0.
+docend
+
+trigger	HitShakeOver
+fmt	HitShakeOver
+docbgn
+If the player is in a gethit state, returns 1 if the hit shake (the period when he is shaking in place) has ended, and 0 otherwise.
+docend
+
+trigger	HitVel
+fmt	HitVel $X
+docbgn
+Gets the value of the velocity imparted to the player by a hit.
+You must specify the component that you want to check, eg.
+"HitVel Y" to check the vertical velocity component.
+A positive HitVel Y means that the player is moving upward on the
+screen. A positive HitVel X means that the player is moving
+backward. Note that the HitVel X trigger behaves in the opposite
+manner to the Vel X trigger.
+docend
+
+trigger	ID
+fmt	ID
+docbgn
+Returns the ID number of the player. The ID number is unique for every player throughout the course of a match. Any helper that is created during this time will also receive its own unique ID number. This trigger may be useful for getting opponents' ID numbers, to be later used with the "playerID" redirection keyword (see exp docs). Do not confuse playerID with targetID.
+docend
+
+trigger	IfElse
+fmt	IfElse($exp_cond,$exp_true,$exp_false)
+docbgn
+This trigger takes three arguments. If the first is nonzero, IfElse returns the
+value of the second argument. Else, it returns the value of the third argument.
+All arguments are evaluated prior to execution of IfElse. In particular, any
+side effects caused by evaluation of the arguments (such as variable
+assignment, or performing a computation that generates a warning) will occur.
+If you wish to avoid these side effects, then use Cond.
+Returns bottom if exp_cond evaluates to bottom, or if exp_true or exp_false (whichever is returned) evaluates to bottom.
+docend
+
+trigger	InGuardDist
+fmt	InGuardDist
+docbgn
+Returns 1 if the player is within guarding distance of an opponent's physical or projectile attack. The guarding distance is the value of the guard.dist parameter of the opponent's HitDef. Returns 0 if out of guard distance, or the opponent is not attacking.
+docend
+
+trigger	IsHelper
+fmt	IsHelper($exprn)
+docbgn
+This trigger takes an optional ID number as an argument. If the ID number is omitted, IsHelper returns 1 if the player is a helper character, and 0 otherwise. If the ID number is included, then IsHelper returns 1 if the player is a helper character with the specified ID number, and 0 otherwise.
+Returns bottom if exprn evaluates to bottom.
+docend
+
+trigger	IsHomeTeam
+fmt	IsHomeTeam
+docbgn
+Returns 1 if the player's team is considered the "home team". In arcade modes, the computer is always considered the home team. In versus modes, P1's side (left) is the home team.
+docend
+
+trigger	LeftEdge
+fmt	LeftEdge
+docbgn
+LeftEdge returns the x position of the left edge of the screen, in absolute stage coordinates.
+This trigger is equivalent to the expression "CameraPos X - GameWidth / 2".
+docend
+
+trigger	Life
+fmt	Life
+docbgn
+Returns the player's life.
+docend
+
+trigger	LifeMax
+fmt	LifeMax
+docbgn
+Returns the maximum amount of life the player can have. This is normally the value of the "life" parameter in the [Data] group of the player variables, but may be different in situations such as team modes.
+docend
+
+trigger	Ln
+fmt	ln($exprn)
+docbgn
+Returns the natural logarithm of its argument. This produces slightly more accurate results than the otherwise equivalent expression log(e,(argument)).
+Returns bottom if exprn evaluates to bottom, or if exprn is not
+positive.
+docend
+
+trigger	Log
+fmt	Log($exp1,$exp2)
+docbgn
+Takes two arguments a and b, and returns the base-a logarithm of b.
+Returns bottom if either of exp1 or exp2 evaluates to bottom, or if
+either of exp1 or exp2 is not positive.
+docend
+
+trigger	Lose
+fmt	Lose
+docbgn
+Returns 1 if the player (or the player's team, in team mode) has lost the round, 0 otherwise. Can be suffixed with "KO" or "Time" to return 1 only when the round has been lost by a KO or by time expiring, respectively.
+docend
+
+trigger	LoseKO
+fmt	LoseKO
+docbgn
+Returns 1 if the player (or the player's team, in team mode) has lost the round, 0 otherwise. Can be suffixed with "KO" or "Time" to return 1 only when the round has been lost by a KO or by time expiring, respectively.
+docend
+
+trigger	LoseTime
+fmt	LoseTime
+docbgn
+Returns 1 if the player (or the player's team, in team mode) has lost the round, 0 otherwise. Can be suffixed with "KO" or "Time" to return 1 only when the round has been lost by a KO or by time expiring, respectively.
+docend
+
+trigger	MatchNo
+fmt	MatchNo
+docbgn
+Returns the current match number.
+The current match number is always 1 in versus-type modes. In Arcade and Team Arcade modes, the match number starts at 1 and increments every time a new match starts (does not increment on continue). If you finish the arcade mode and start a new game, the match number reverts to 1.
+docend
+
+trigger	MatchOver
+fmt	MatchOver
+docbgn
+Returns 1 if the match has ended. (For example, in the case of a best-of-three match, this will return true when one of the players or teams has won two rounds.)
+Currently, MatchOver does not return true until the players start
+their win poses (state 180). This behavior may be subject to change
+in future releases.
+docend
+
+trigger	MoveContact
+fmt	MoveContact
+docbgn
+This trigger is valid only when the player is in an attack state.
+MoveContact gives a non-zero value if P2 has either been hit, or has guarded P1's attack. It gives 0 otherwise. P1 is the player, and P2 is his opponent.
+Typically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+On attack contact, MoveContact returns 1. After contact, MoveContact's return value will increase by 1 for each game tick that P1 is not paused (P1 gets paused on contact; see pausetime parameter in HitDef controller). The values of MoveGuarded, MoveHit and MoveReversed increment in the same fashion.
+Note 1: the values of MoveContact, MoveGuarded, MoveHit and MoveReversed are set simultaneously. For example, if one HitDef in a move hits successfully, MoveHit will return non-zero. If a following HitDef in the same move is guarded, MoveGuarded will return non-zero, and the other three triggers will return 0.
+Note 2: the values of the four Move* triggers reset to 0 and stop incrementing after a state transition. See "movehitpersist" parameter for StateDefs (CNS docs) for how to override this behavior.
+docend
+
+trigger	MoveGuarded
+fmt	MoveGuarded
+docbgn
+This trigger is valid only when the player is in an attack state.
+MoveGuarded gives a non-zero value if P2 is guarding, or has guarded, P1's attack. It gives 0 otherwise. P1 is the player, and P2 is his opponent.
+Typically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+See Details section for MoveContact trigger.
+docend
+
+trigger	MoveHit
+fmt	MoveHit
+docbgn
+This trigger is valid only when the player is in an attack state.
+MoveHit gives a non-zero value if P2 has been hit by P1's attack. It gives 0 otherwise.
+Typically used with the "StateNo" and "Command" triggers for detecting move-interrupts in the CMD file.
+See Details section for MoveContact trigger.
+docend
+
+trigger	MoveType
+fmt	MoveType = $move_type
+docbgn
+MoveType gives the player's move-type. Refer to the section
+on StateDef in the CNS documentation for more details on MoveType.
+Useful for "move interrupts" in the CMD file.
+docend
+
+trigger	MoveReversed
+fmt	MoveReversed
+docbgn
+This trigger is valid only when the player is in an attack state.
+MoveReversed gives a non-zero value if P1's attack has been reversed by P2. It gives 0 otherwise.
+See Details section for MoveContact trigger.
+docend
+
+trigger	Name
+fmt	Name = "$name"
+docbgn
+Returns the player's name (the internal name specified in the .DEF file, which may not be the same as the displayed name).
+docend
+
+trigger	NumEnemy
+fmt	NumEnemy
+docbgn
+NumEnemy returns the number of opponents that exist. Neutral players and normal helpers are not considered opponents.
+docend
+
+trigger	NumExplod
+fmt	NumExplod($exprn)
+docbgn
+This trigger takes an ID number as an optional argument. If the ID number is omitted, NumExplod returns the number of explods owned by the player. If the ID number is included, then NumExplod returns the number of explods with that ID number that are owned by the player. The ID number must be greater than -1. An ID number of -1 or less will give the same behavior as if the ID number is omitted.
+Returns bottom if exprn evaluates to bottom.
+docend
+
+trigger	NumHelper
+fmt	NumHelper($exprn)
+docbgn
+This trigger takes an ID number as an optional argument. If the ID number is omitted, then NumHelper returns the total number of helpers currently owned by the player. If the ID number is included, then NumHelper returns the total number of helpers with that ID number owned by the player. The ID number must be greater than 0. If the ID
+number is 0 or less, then all helpers are counted.
+Returns bottom if exprn evaluates to bottom.
+docend
+
+trigger	NumPartner
+fmt	NumPartner
+docbgn
+NumPartner returns the number of partners that exist. Neutral players and normal helpers are not considered partners.
+docend
+
+trigger	NumProj
+fmt	NumProj
+docbgn
+Returns the total number of projectiles currently owned by the player.
+docend
+
+trigger	NumProjID
+fmt	NumProjID($exprn)
+docbgn
+This trigger takes an ID number as a required argument. It returns the number of projectiles currently owned by the player and having the specified ID number.
+If a negative ID is specified, then the ID defaults to 0. Returns
+bottom if exprn evaluates to bottom.
+docend
+
+trigger	NumTarget
+fmt	NumTarget($exprn)
+docbgn
+This trigger takes an ID number as an optional argument. If the ID number is omitted, NumTarget returns the current number of targets for the player. If the ID number is included, then NumTarget returns the number of targets for the player which have that target ID number. The ID number must be greater than -1. An ID number of -1 or less will give the same behavior as if the ID number is omitted.
+Returns bottom if exprn evaluates to bottom.
+docend
+
+trigger	P1Name
+docbgn
+This is an alias for the Name trigger. See "Name".
+docend
+
+trigger	P2BodyDist
+fmt	P2BodyDist $X
+docbgn
+Returns the distance of P2 from P1, where P1 is the player, and P2 is his opponent. P2BodyDist is useful in the CMD for cases where P1 has an attack that is different when performed close to P2.
+For comparing the Y-distance, P2BodyDist gives the difference in the
+heights of the players' Y-axes. A negative value means that P2 is
+above P1.
+For comparing the X-distance, P2BodyDist gives the
+X-distance of P2's front from P1's front. So, if the
+players are standing right next to each other, then
+P2BodyDist is 0. Remember that you can set the width of
+the player in "front.width", etc. under [Size] in the
+player variables.
+See also P2Dist.
+docend
+
+trigger	P2Dist
+fmt	P2Dist $X
+docbgn
+Returns the distance of P2 from P1, where P1 is the player, and P2 is his opponent.
+For comparing the Y-distance, P2Dist gives the difference in the
+heights of the players' Y-axes. A negative value means that P2 is
+above P1.
+For comparing the X-distance, P2Dist gives the X-distance
+of P2's axis from P1's axis. A positive value indicates P2
+is in front of P1.
+See also P2BodyDist.
+docend
+
+trigger	P2Life
+docbgn
+Same as Life, except that this returns the opponent's life.
+docend
+
+trigger	P2MoveType
+docbgn
+Same as MoveType, except that this returns the opponent's movetype.
+docend
+
+trigger	P2Name
+docbgn
+Same as P1Name, except that this returns the name of the primary opponent (the opponent in versus mode, or the first opponent in team mode).
+If there is no primary opponent, then p2name = "name" returns 0 no
+matter what name is specified. Similarly, p2name != "name" will return 1 no matter what name is specified.
+docend
+
+trigger	P2StateNo
+docbgn
+Same as StateNo, except that this returns the opponent's state number.
+Returns bottom if p2 does not exist. (For instance, if the round
+has been won.)
+docend
+
+trigger	P2StateType
+docbgn
+Same as StateType, except that this returns the opponent's state type.
+Returns bottom if p2 does not exist. (For instance, if the round
+has been won.)
+docend
+
+trigger	P3Name
+docbgn
+Same as P1Name, except that this returns the name of the player's teammate, if present.
+If there is no teammate, then p3name = "name" returns 0 no matter what name is specified. Similarly, p3name != "name" will return 1 no matter what name is specified.
+docend
+
+trigger	P4Name
+docbgn
+Same as P1Name, except that this returns the name of the secondary opponent, if present.
+If there is no secondary opponent, then p4name = "name" returns 0 no matter what name is specified. Similarly, p4name != "name" will return 1 no matter what name is specified.
+docend
+
+trigger	PalNo
+fmt	PalNo
+docbgn
+Returns the palette number of the player (i.e., the color scheme chosen for the character during character select.)
+
+The palette ordering is specified in the character's def file.
+If omitted, the default ordering is:
+A  B  C  X  Y  Z A2 B2 C2 X2 Y2 Z2
+1  2  3  4  5  6  7  8  9 10 11 12
+docend
+
+trigger	ParentDist
+fmt	ParentDist $X
+docbgn
+This trigger is only valid for helper-type characters.
+ParentDist returns the distance from the helper to its parent. It works similarly to P2Dist.
+Returns bottom if the player does not have a parent (e.g., if the
+parent was destroyed or KO'd).
+For comparing the Y-distance, ParentDist gives the difference in the
+heights of the players' Y-axes. A negative value means that the
+parent is above its child.
+For comparing the X-distance, ParentDist gives the X-distance
+of the parent's axis from the child's axis. A positive value
+indicates the parent is in front of the child.
+docend
+
+trigger	Pi
+fmt	pi
+docbgn
+This trigger returns the numeric value of pi (3.141593...)
+docend
+
+trigger	Pos
+fmt	Pos $X
+docbgn
+Gets the value of the player's position. You must specify the component that you want to check, eg. "Pos Y" to check the Y-position.
+For "Pos X", the value is relative to the center of the
+screen (value 0). Negative is left, positive is right.
+Due to historical reasons, "Pos X" does not return absolute
+position of the player (i.e. relative to the center of the stage),
+which may be the more intuitive behavior.
+To get the absolute position of the player, use "Pos X + CameraPos X".
+For "Pos Y", the value is relative to the floor. Negative
+is higher up, positive is below the floor.
+docend
+
+trigger	Power
+fmt	Power
+docbgn
+Returns the amount of power the player has.
+docend
+
+trigger	PowerMax
+fmt	PowerMax
+docbgn
+Returns the maximum amount of power the player can have. This is normally 3000 (level 3).
+docend
+
+trigger	PlayerIDExist
+fmt	PlayerIDExist(ID_number)
+docbgn
+Returns 1 if a player with the specified ID number exists, 0 otherwise. This ID number is obtained using the "ID" trigger (see ID). Do not confuse PlayerID with TargetID.
+Returns bottom if exprn evaluates to bottom.
+docend
+
+trigger	PrevStateNo
+fmt	StateNo
+docbgn
+Returns the number of the state that the player was last in. The results of this trigger are not guaranteed to be accurate.
+docend
+
+trigger	ProjCancelTime
+fmt	ProjCancelTime($exprn)
+docbgn
+This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact was cancelled by an opponent's projectile and had the specified ID number, then ProjCancelTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjCancelTime returns -1.
+Returns bottom if exprn evaluates to bottom. If a negative ID is
+specified, then the ID defaults to zero.
+docend
+
+trigger	ProjContact
+fmt	ProjContact$1234 = $value, = $value2
+docbgn
+This trigger takes an optional ID number as a suffix. If the ID number is omitted, ProjContact returns true if any of the player's projectiles either successfully hit the opponent or were guarded by the opponent. When the ID number is specified, ProjContact returns true only if any of the player's projectiles with the specified ID number either successfully hit the opponent or was guarded.
+ProjContact will trigger once for each hit of the projectile, so a
+multi-hit projectile can trigger multiple times.
+The first form of ProjContact shown above is only valid for one tick
+after contact, unlike MoveContact.
+For the second form, ProjContact returns true if the projectile made
+contact n ticks ago, where n is a nonnegative number satisfying the
+relation "n [oper] value2".
+Specifying an ID number of 0 gives the same behavior as if the ID
+number is omitted (check all projectiles).
+docend
+
+trigger	ProjContactTime
+fmt	ProjContactTime($exprn)
+docbgn
+This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact, made contact with the opponent and had the specified ID number, then ProjContactTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjContactTime returns -1.
+Returns bottom if exprn evaluates to bottom. If a negative ID is
+specified, then the ID defaults to zero.
+docend
+
+trigger	ProjGuarded
+fmt	ProjGuarded$1234 = $value, = $value2
+docbgn
+This trigger takes an optional ID number as a suffix. If the ID number is omitted, ProjGuarded returns true if any of the player's projectiles were guarded by the opponent. When the ID number is specified, ProjGuarded returns true only if one of the player's projectiles with the specified ID number was guarded by the opponent.
+ProjGuarded will trigger once for each hit of the projectile, so a
+multi-hit projectile can trigger multiple times.
+The first form of ProjGuarded shown above is only valid for one tick
+after hit, unlike MoveGuarded.
+For the second form, ProjGuarded returns true if the projectile was
+guarded n ticks ago, where n is a nonnegative number satisfying the
+relation "n [oper] value2".
+Specifying an ID number of 0 gives the same behavior as if the ID
+number is omitted (check all projectiles).
+docend
+
+trigger	ProjGuardedTime
+fmt	ProjCancelTime($exprn)
+docbgn
+This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact was guarded by the opponent and had the specified ID number, then ProjGuardedTime returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked. If no projectile meets all the above conditions, then ProjGuardedTime returns -1.
+Returns bottom if exprn evaluates to bottom. If a negative ID is
+specified, then the ID defaults to zero.
+docend
+
+trigger	ProjHit
+fmt	ProjHit$1234 = $value, = $value2
+docbgn
+This trigger takes an optional positive ID number as a suffix. If the ID number is omitted, ProjHit returns true if any of the player's projectiles successfully hit the opponent. When the ID number is specified, ProjHit returns true only if one of the player's projectiles with the specified ID number successfully hit the opponent.
+ProjHit will trigger once for each hit of the projectile, so a
+multi-hit projectile can trigger multiple times.
+The first form of ProjHit shown above is only valid for one tick
+after hit, unlike MoveHit.
+For the second form, ProjHit returns true if the projectile hit
+n ticks ago, where n is a nonnegative number satisfying the relation
+"n [oper] value2".
+Specifying an ID number of 0 gives the same behavior as if the ID
+number is omitted (check all projectiles).
+docend
+
+trigger	ProjHitTime
+fmt	ProjHitTime($exprn)
+docbgn
+This trigger takes an required nonnegative ID number as an argument.  If the player's last projectile to make any kind of contact successfully hit the opponent and had the specified ID number, then ProjHit returns the number of ticks since that contact occurred. If the specified ID number is 0, then the projectile ID is not checked.
+If no projectile meets all the above conditions, then ProjHitTime returns -1.
+Returns bottom if exprn evaluates to bottom. If a negative ID is
+specified, then the ID defaults to zero.
+docend
+
+trigger	Random
+fmt	Random
+docbgn
+Returns a random number between 0 and 999, inclusive.
+docend
+
+trigger	RightEdge
+fmt	LeftEdge
+docbgn
+RightEdge returns the x position of the right edge of the screen, in absolute stage coordinates.
+This trigger is equivalent to the expression "CameraPos X + GameWidth / 2".
+docend
+
+trigger	RootDist
+fmt	RootDist $X
+docbgn
+This trigger is only valid for helper-type characters.
+RootDist returns the distance from the helper to its root. The root is the main player character who owns the helper: for instance, if you select Kumquat to play with, and Kumquat spawns a helper named Kiwi, who in turn spawns a helper named Penguin, then Penguin's root is Kumquat, and Penguin is a descendant of Kumquat. RootDist works similarly to P2Dist.
+Returns bottom if the player has no root.
+For comparing the Y-distance, RootDist gives the difference in the
+heights of the players' Y-axes. A negative value means that the
+root is above its descendant.
+For comparing the X-distance, ParentDist gives the X-distance
+of the root's axis from the descendant's axis. A positive value
+indicates the root is in front of its descendant.
+docend
+
+trigger	RoundNo
+fmt	RoundNo
+docbgn
+Returns the current round number.
+docend
+
+trigger	RoundsExisted
+fmt	RoundsExisted
+docbgn
+Returns the number of rounds the player has existed for. On the first round, returns 0. This is useful for a Turns mode intro.
+docend
+
+trigger	RoundState
+fmt	RoundState
+docbgn
+Returns the current round state number.
+
+
+Return values:
+0. Pre-intro  - screen fades in
+1. Intro
+2. Fight - players do battle
+3. Pre-over - just a round is won or lost
+4. Over - win poses
+docend
+
+trigger	ScreenPos
+fmt	ScreenPos $X
+docbgn
+Gets the value of the player's position relative to the top-right corner of the screen.
+For "ScreenPos X", the value is relative to the left of the
+screen (value 0). Negative is left, positive is right.
+For "ScreenPos Y", the value is relative to the top of the screen.
+Negative is above the screen, positive is downward.
+docend
+
+trigger	ScreenHeight
+fmt	ScreenHeight
+docbgn
+Returns the height of the screen space in the player's local coordinate space.
+ScreenWidth and ScreenHeight are not affected by the camera zoom factor.
+docend
+
+trigger	ScreenWidth
+fmt	ScreenWidth
+docbgn
+Returns the width of the screen space in the player's local coordinate space.
+ScreenWidth and ScreenHeight are not affected by the camera zoom factor.
+docend
+
+trigger	SelfAnimExist
+docbgn
+Like AnimExist, except that this only checks P1's animation data. If P1 has been given P2's animation data by a hit, SelfAnimExist will not check P2's animation data to determine whether or not a given action exists.
+docend
+
+trigger	Sin
+fmt	sin($exprn)
+docbgn
+Computes the sine of the specified argument (in radians.)
+Returns bottom if exprn evaluates to bottom.
+docend
+
+trigger	StateNo
+fmt	StateNo
+docbgn
+Returns the player's current state number. Useful for "move interrupts" in the CMD file.
+docend
+
+trigger	StateType
+fmt	StateType = $state_type
+docbgn
+StateType gives the player's state-type. Refer to the section
+on StateDef in the CNS documentation for more details on StateType.
+Useful for "move interrupts" in the CMD file.
+docend
+
+trigger	StageVar
+fmt	StageVar($param_name) = "$string"
+docbgn
+Returns information about the stage.
+A limited number of parameters are supported.
+
+info.author: Compares the value of the "author" parameter
+in the [Info] group. (boolean)
+info.displayname: Compares the value of the "displayname" parameter
+in the [Info] group. (boolean)
+info.name: Compares the value of the "name" parameter
+in the [Info] group. (boolean)
+docend
+
+trigger	SysFVar
+fmt	SysFVar($exprn)
+docbgn
+This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified system float variable.
+This trigger should NOT be used under normal circumstances. System
+variables are reserved for bookkeeping in common1.cns.
+Returns bottom if exprn evaluates to bottom, or if exprn evaluates
+to an invalid variable index.
+docend
+
+trigger	SysVar
+fmt	SysVar($exprn)
+docbgn
+This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified system int variable.
+This trigger is NOT to be used under normal circumstances. System
+variables are reserved for bookkeeping in common1.cns.
+Returns bottom if exprn evaluates to bottom, or if exprn evaluates
+to an invalid variable index.
+docend
+
+trigger	Tan
+fmt	tan($exprn)
+docbgn
+Computes the tangent of the specified argument (in radians.)
+Returns bottom if exprn evaluates to bottom.
+docend
+
+trigger	TeamMode
+fmt	TeamMode = $mode
+docbgn
+TeamMode gives the current mode of play for the player's team.
+In survival mode, TeamMode = turns on the enemy side.
+docend
+
+trigger	TeamSide
+fmt	TeamSide
+docbgn
+Returns the team side the player is on. 1 represents P1 side (left), 2 for P2 side (right).
+docend
+
+trigger	TicksPerSecond
+fmt	TicksPerSecond
+docbgn
+Returns the number of ticks per second. Useful for time calculations.
+docend
+
+trigger	Time
+fmt	Time
+docbgn
+Returns the state-time of the player (that is, the number of ticks that the player has been in the current state so far).
+docend
+
+trigger	TimeMod
+fmt	TimeMod = $divisor, $value1
+docbgn
+Returns the remainder when the state-time of the player is divided by the specified value.
+The % operator subsumes the functionality of TimeMod, so it is recommended that you use % instead.
+Returns bottom if the divisor is 0.
+docend
+
+trigger	TopEdge
+fmt	TopEdge
+docbgn
+TopEdge returns the y position of the top edge of the screen, in absolute stage coordinates.
+This trigger is equivalent to the expression "Pos Y - ScreenPos Y".
+docend
+
+trigger	UniqHitCount
+fmt	UniqHitCount
+docbgn
+Returns the total number of hits the player's current attack move has done. This value is valid only for a single state; after any state change, it resets to 0. To prevent it from resetting to 0, set hitcountpersist in the StateDef (see cns documentation for details). The HitCount and UniqHitCount triggers differ only when the player is hitting more than one opponent. In the case where the player is hitting two opponents with the same attack, HitCount will increase by 1 for every hit, while UniqHitCount increases by 2.
+docend
+
+trigger	Var
+fmt	Var($exprn)
+docbgn
+This trigger takes a mandatory variable number as an argument. It returns the value of the player's specified int variable.
+Returns bottom if exprn evaluates to bottom, or if exprn evaluates
+to an invalid variable index.
+docend
+
+trigger	Vel
+fmt	Vel $X
+docbgn
+Gets the value of the player's velocity. You must specify the component that you want to check, eg. "Vel Y" to check the Y-velocity.
+For Vel X, a positive value indicates that the player is moving forward. (This behavior is the opposite of HitVel X's behavior.) For Vel Y, a positive value indicates that the player is moving downward.
+docend
+
+trigger	Win
+fmt	Win
+docbgn
+Returns true if the player (or the player's team, in team mode) has won the round, false otherwise. Can be suffixed with "KO", "Time", or "Perfect" to return true only when the round has been won by a KO, by time expiring, or with no life lost, respectively.
+docend
+
+trigger	WinKO
+fmt	WinKO
+docbgn
+Returns true if the player (or the player's team, in team mode) has won the round, false otherwise. Can be suffixed with "KO", "Time", or "Perfect" to return true only when the round has been won by a KO, by time expiring, or with no life lost, respectively.
+docend
+
+trigger	WinTime
+fmt	WinTime
+docbgn
+Returns true if the player (or the player's team, in team mode) has won the round, false otherwise. Can be suffixed with "KO", "Time", or "Perfect" to return true only when the round has been won by a KO, by time expiring, or with no life lost, respectively.
+docend
+
+trigger	WinPerfect
+fmt	WinPerfect
+docbgn
+Returns true if the player (or the player's team, in team mode) has won the round, false otherwise. Can be suffixed with "KO", "Time", or "Perfect" to return true only when the round has been won by a KO, by time expiring, or with no life lost, respectively.
 docend
 
 sctrl	Text	ikgo

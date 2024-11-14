@@ -3341,7 +3341,7 @@ Returns the character's `localcoord` as a float. This trigger returns a constant
 docend
 
 trigger	Map	ikgo
-fmt	Map
+fmt	Map($name)
 docbgn
 Use the name of the map you want to recognize in parentheses. For example, a character with the below map will return Map(age) as a value set in character DEF file or via various state controllers that can modify character's map. If nothing is set, 0 is returned.
 docend

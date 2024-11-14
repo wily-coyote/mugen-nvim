@@ -54,7 +54,7 @@ module.setup = function(mod)
 			ikemen = true
 		end
 	end
-	vim.api.nvim_create_user_command("Mugen", function(_)
+	vim.api.nvim_create_user_command("Mugen", function(args)
 		if not module.checkExt() then
 			vim.api.nvim_err_writeln("Not a recognized MUGEN file")
 			return
@@ -88,7 +88,11 @@ module.setup = function(mod)
 			end
 		end
 		local command = {mod.game_path}
-		for _,v in pairs(mod.run_command) do
+		local run_command = mod.run_command
+		if #args.fargs > 0 then
+			run_command = args.fargs
+		end
+		for _,v in pairs(run_command) do
 			if v == "%" then
 				table.insert(command, def)
 			else
@@ -96,7 +100,7 @@ module.setup = function(mod)
 			end
 		end
 		vim.system(command, { cwd = mod.game_dir })
-	end, { nargs = 0 } )
+	end, { nargs = '*' } )
 
 	-- die silently
 	pcall(function()

@@ -1,0 +1,3 @@
+[submodule "lua/cmp-mugen/data"]
+	path = lua/cmp-mugen/data
+	url = https://github.com/wily-coyote/mugen-cmp-data

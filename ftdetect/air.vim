@@ -14,4 +14,4 @@
 "    You should have received a copy of the GNU General Public License
 "    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-au BufRead,BufNewFile *.air  setf air
+au BufRead,BufNewFile *.air  set ft=air commentstring=;\ %s

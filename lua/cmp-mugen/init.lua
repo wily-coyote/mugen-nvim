@@ -34,7 +34,7 @@ end
 --- Return whether this source is available in the current context or not (optional).
 --- @return boolean
 function source:is_available()
-	return mugen.checkExt() ~= nil
+	return mugen.checkExt() ~= nil and mugen.checkExt() ~= 3
 end
 
 --- Invoke completion (required).

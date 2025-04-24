@@ -14,6 +14,6 @@
 "    You should have received a copy of the GNU General Public License
 "    along with this program.  If not, see <https://www.gnu.org/licenses/>.
 
-au BufRead,BufNewFile *.cns,*.def,*.st,*.const  set ft=cns
+au BufRead,BufNewFile *.cns,*.def,*.st,*.const  set ft=cns commentstring=;\ %s
 " The following might conflict with DOS cmd files
 " au BufRead,BufNewFile *.cmd  set ft=cns

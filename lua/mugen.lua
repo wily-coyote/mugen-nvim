@@ -6,10 +6,15 @@ local defs = {
 local ikemen = false
 local module = {}
 
-local ikext = {
-	"zss",
+local extnoauto = {
 	"const",
 	"json",
+	"lua",
+	"cfg",
+}
+
+local ikext = {
+	"zss",
 }
 
 local mugext = {
@@ -18,10 +23,12 @@ local mugext = {
 	"cmd",
 	"air",
 	"def",
-	"cfg",
 }
 
 function module.checkExt()
+	for _,v in pairs(extnoauto) do
+		if v == vim.bo.filetype then return 3 end
+	end
 	for _,v in pairs(ikext) do
 		if v == vim.bo.filetype then return 2 end
 	end
@@ -74,34 +81,35 @@ module.setup = function(mod)
 				vim.api.nvim_err_writeln("Please set `game_path` in your config")
 			end
 		end
-		if def == nil then
-			vim.api.nvim_err_writeln("Couldn't find .DEF file")
-			return
-		end
-		if not ikemen then
-			local check = vim.fs.joinpath(mod.game_dir, "chars")
-			local cut = #(check)
-			if def:sub(0, cut) == check then
-				def = def:sub(cut+2)
-			else
-				vim.api.nvim_err_writeln("You're using a MUGEN executable, and the .DEF file isn't in the chars folder")
-			end
-		end
 		local command = {mod.game_path}
-		local run_command = mod.run_command
-		if #args.fargs > 0 then
-			run_command = args.fargs
-		end
-		for _,v in pairs(run_command) do
-			if v == "%" then
-				table.insert(command, def)
-			else
-				table.insert(command, v)
+		if args.bang ~= true then
+			if def == nil then
+				vim.api.nvim_err_writeln("Couldn't find .DEF file")
+				return
+			end
+			if not ikemen then
+				local check = vim.fs.joinpath(mod.game_dir, "chars")
+				local cut = #(check)
+				if def:sub(0, cut) == check then
+					def = def:sub(cut+2)
+				else
+					vim.api.nvim_err_writeln("You're using a MUGEN executable, and the .DEF file isn't in the chars folder")
+				end
+			end
+			local run_command = mod.run_command
+			if #args.fargs > 0 then
+				run_command = args.fargs
+			end
+			for _,v in pairs(run_command) do
+				if v == "%" then
+					table.insert(command, def)
+				else
+					table.insert(command, v)
+				end
 			end
 		end
 		vim.system(command, { cwd = mod.game_dir })
-	end, { nargs = '*' } )
-
+	end, { nargs = '*', bang = true } )
 	-- die silently
 	pcall(function()
 		local cmpsrc = require("./cmp-mugen")

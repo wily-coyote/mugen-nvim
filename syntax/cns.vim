@@ -35,3 +35,4 @@ hi link cnsTrigger Special
 hi link cnsTriggerType Special
 hi link cnsOperator Operator
 hi link cnsIdentifier Function
+
